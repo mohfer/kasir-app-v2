@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
             'foto' => '',
         ]);
 
-        Category::factory(10000)->create();
+        Category::factory(50)->create();
     }
 }

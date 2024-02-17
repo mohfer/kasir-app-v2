@@ -52,10 +52,13 @@
                     @if ($categories->isEmpty())
                         <p class="text-center mt-3">No Data</p>
                     @else
-                        <table class="table table-striped">
-                            <thead>
+                        <table class="table table-striped table-bordered mt-3">
+                            <thead class="table-primary">
                                 <tr>
-                                    <th scope="col"></th>
+                                    <th scope="col" class="text-center">
+                                        <input type="checkbox" class="form-check-input" wire:model="selectAll"
+                                            wire:click="toggleSelectAll">
+                                    </th>
                                     <th scope="col">No</th>
                                     <th scope="col" wire:click="sort('nama_kategori')">Kategori
                                         <span class="float-end" style="cursor: pointer;">
@@ -74,7 +77,7 @@
                                         <td class="text-center"><input type="checkbox" class="form-check-input"
                                                 value="{{ $category->id }}" wire:model.live='selectedCategoryId'
                                                 wire:key='{{ $category->id }}'></td>
-                                        <th scope="row">{{ $categories->firstItem() + $key }}</th>
+                                        <td>{{ $categories->firstItem() + $key }}</td>
                                         <td>{{ $category->nama_kategori }}</td>
                                         <td class="text-center"><button class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modalUpdate"
@@ -87,7 +90,14 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $categories->links() }}
+                        <div class="row">
+                            <div class="col">
+                                {{ $categories->links() }}
+                            </div>
+                            <div class="col mt-2 text-end">
+                                Jumlah Data: <span class="fw-bold">{{ $countCategories }}</span>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>

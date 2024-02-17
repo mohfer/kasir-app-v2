@@ -20,8 +20,10 @@ class Kategori extends Component
     public $category_id;
     public $searchKey;
     public $selectedCategoryId = [];
+    public $selectAll = false;
     public $sortColumn = 'nama_kategori';
     public $sortDirection = 'asc';
+    public $countCategories;
 
     public function save()
     {
@@ -95,6 +97,15 @@ class Kategori extends Component
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
     }
 
+    public function toggleSelectAll()
+    {
+        if ($this->selectAll) {
+            $this->selectedCategoryId = Category::pluck('id')->toArray();
+        } else {
+            $this->selectedCategoryId = [];
+        }
+    }
+
     public function render()
     {
         view()->share('title', $this->title);
@@ -103,6 +114,7 @@ class Kategori extends Component
         } else {
             $category = Category::orderBy($this->sortColumn, $this->sortDirection)->paginate(10);
         }
+        $this->countCategories = Category::count();
         return view('livewire.kategori', [
             'categories' => $category,
         ]);
