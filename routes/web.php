@@ -3,6 +3,8 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard;
 use App\Livewire\Kategori;
+use App\Livewire\Supplier;
+use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +27,7 @@ Route::get('/login', Login::class)->name('auth.login')->middleware('guest');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/kategori', Kategori::class)->name('kategori');
+
+    Route::get('/suppliers', Supplier::class)->name('suppliers');
+    Route::get('/users', User::class)->name('users');
 });

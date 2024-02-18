@@ -16,10 +16,10 @@
 
                     {{-- Trigger Bulking Delete --}}
                     <div class="text-start mb-3">
-                        @if ($selectedCategoryId)
+                        @if ($selectedSupplierId)
                             <button class="btn btn-danger mt-5" data-bs-toggle="modal" data-bs-target="#modalDelete"
                                 wire:click="deleteConfirmation('')">Delete
-                                {{ count($selectedCategoryId) }} Data</button>
+                                {{ count($selectedSupplierId) }} Data</button>
                         @endif
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     <div class="text-end mb-3">
                         <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal"
                             data-bs-target="#modalTambah">
-                            Tambah Kategori
+                            Tambah {{ $title }}
                         </button>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <h4 class="fw-bold">Kategori</h4>
+                            <h4 class="fw-bold">{{ $title }}</h4>
                         </div>
                         <div class="col">
                             <input type="text" class="form-control" placeholder="Search..." autofocus
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="container">
-                    @if ($categories->isEmpty())
+                    @if ($suppliers->isEmpty())
                         <p class="text-center mt-3">No Data</p>
                     @else
                         <table class="table table-striped table-bordered mt-3">
@@ -60,31 +60,55 @@
                                             wire:click="toggleSelectAll">
                                     </th>
                                     <th scope="col">No</th>
-                                    <th scope="col" wire:click="sort('nama_kategori')">Kategori
+                                    <th scope="col" wire:click="sort('nama')">Nama
                                         <span class="float-end" style="cursor: pointer;">
                                             <i
-                                                class="bi bi-arrow-down {{ $sortColumn === 'nama_kategori' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                                class="bi bi-arrow-down {{ $sortColumn === 'nama' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
                                             <i
-                                                class="bi bi-arrow-up {{ $sortColumn === 'nama_kategori' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                                class="bi bi-arrow-up {{ $sortColumn === 'nama' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
                                         </span>
                                     </th>
+                                    <th scope="col" wire:click="sort('email')">Email <span class="float-end"
+                                            style="cursor: pointer;">
+                                            <i
+                                                class="bi bi-arrow-down {{ $sortColumn === 'email' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                            <i
+                                                class="bi bi-arrow-up {{ $sortColumn === 'email' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                        </span></th>
+                                    <th scope="col" wire:click="sort('alamat')">Alamat <span class="float-end"
+                                            style="cursor: pointer;">
+                                            <i
+                                                class="bi bi-arrow-down {{ $sortColumn === 'alamat' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                            <i
+                                                class="bi bi-arrow-up {{ $sortColumn === 'alamat' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                        </span></th>
+                                    <th scope="col" wire:click="sort('telp')">Telp <span class="float-end"
+                                            style="cursor: pointer;">
+                                            <i
+                                                class="bi bi-arrow-down {{ $sortColumn === 'telp' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
+                                            <i
+                                                class="bi bi-arrow-up {{ $sortColumn === 'telp' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
+                                        </span></th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $key => $category)
+                                @foreach ($suppliers as $key => $supplier)
                                     <tr>
                                         <td class="text-center"><input type="checkbox" class="form-check-input"
-                                                value="{{ $category->id }}" wire:model.live='selectedCategoryId'
-                                                wire:key='{{ $category->id }}'></td>
-                                        <td>{{ $categories->firstItem() + $key }}</td>
-                                        <td>{{ $category->nama_kategori }}</td>
+                                                value="{{ $supplier->id }}" wire:model.live='selectedSupplierId'
+                                                wire:key='{{ $supplier->id }}'></td>
+                                        <td>{{ $suppliers->firstItem() + $key }}</td>
+                                        <td>{{ $supplier->nama }}</td>
+                                        <td>{{ $supplier->email }}</td>
+                                        <td>{{ $supplier->alamat }}</td>
+                                        <td>{{ $supplier->telp }}</td>
                                         <td class="text-center"><button class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modalUpdate"
-                                                wire:click='edit({{ $category->id }})'>Edit</button> |
+                                                wire:click='edit({{ $supplier->id }})'>Edit</button> |
                                             <button class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#modalDelete"
-                                                wire:click='deleteConfirmation({{ $category->id }})'>Delete</button>
+                                                wire:click='deleteConfirmation({{ $supplier->id }})'>Delete</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -92,10 +116,10 @@
                         </table>
                         <div class="row">
                             <div class="col">
-                                {{ $categories->links() }}
+                                {{ $suppliers->links() }}
                             </div>
                             <div class="col mt-2 text-end">
-                                Jumlah Data: <span class="fw-bold">{{ $countCategories }}</span>
+                                Jumlah Data: <span class="fw-bold">{{ $countSuppliers }}</span>
                             </div>
                         </div>
                     @endif
@@ -108,7 +132,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah
-                                Kategori</h1>
+                                Supplier</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 wire:click='clear()'></button>
                         </div>
@@ -116,11 +140,40 @@
                             <form wire:submit.prevent='save'>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama
-                                        Kategori</label>
-                                    <input type="text"
-                                        class="form-control @error('nama_kategori') is-invalid @enderror"
-                                        wire:model.lazy='nama_kategori'>
-                                    @error('nama_kategori')
+                                        Supplier</label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        wire:model.lazy='nama'>
+                                    @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        wire:model.lazy='email'>
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Alamat</label>
+                                    <textarea cols="30" rows="3" class="form-control @error('alamat') is-invalid @enderror"
+                                        wire:model.lazy='alamat'></textarea>
+                                    @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Telp</label>
+                                    <input type="number" class="form-control @error('telp') is-invalid @enderror"
+                                        wire:model.lazy='telp'>
+                                    @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -149,11 +202,41 @@
                         <div class="modal-body">
                             <form wire:submit.prevent='update'>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Nama Kategori</label>
-                                    <input type="text"
-                                        class="form-control @error('nama_kategori') is-invalid @enderror"
-                                        wire:model.lazy='nama_kategori'>
-                                    @error('nama_kategori')
+                                    <label for="" class="form-label">Nama
+                                        Supplier</label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        wire:model.lazy='nama'>
+                                    @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        wire:model.lazy='email'>
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Alamat</label>
+                                    <textarea cols="30" rows="3" class="form-control @error('alamat') is-invalid @enderror"
+                                        wire:model.lazy='alamat'></textarea>
+                                    @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Telp</label>
+                                    <input type="number" class="form-control @error('telp') is-invalid @enderror"
+                                        wire:model.lazy='telp'>
+                                    @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -16,7 +16,6 @@ class Kategori extends Component
     public $nama_kategori;
 
     public $title = 'Kategori';
-    public $category;
     public $category_id;
     public $searchKey;
     public $selectedCategoryId = [];
@@ -47,30 +46,41 @@ class Kategori extends Component
 
     public function update()
     {
-        $this->validate();
+        $category = Category::find($this->category_id);
 
-        Category::find($this->category_id)->update([
-            'nama_kategori' => $this->nama_kategori,
+        $this->validate([
+            'nama_kategori' => 'required|unique:categories,nama_kategori,' . $this->category_id,
         ]);
 
-        session()->flash('status', 'Data Berhasil Diperbarui!');
+        if ($category->isDirty('nama_kategori')) {
+            $category->update([
+                'nama_kategori' => $this->nama_kategori,
+            ]);
+
+            session()->flash('status', 'Data Berhasil Diperbarui!');
+        } else {
+            session()->flash('status', 'Tidak ada perubahan yang dilakukan.');
+        }
+
         return $this->redirect('/kategori', navigate: true);
     }
 
+
+
     public function deleteConfirmation($id)
     {
-        if ($id != '') {
+        if (!empty($id)) {
             $this->category_id = $id;
         }
     }
 
     public function delete()
     {
-        if ($this->category_id != '') {
+        if (!empty($this->category_id)) {
             $id = $this->category_id;
             Category::find($id)->delete();
         }
-        if (count($this->selectedCategoryId)) {
+        if (!empty($this->selectedCategoryId)) {
             for ($i = 0; $i < count($this->selectedCategoryId); $i++) {
                 Category::find($this->selectedCategoryId[$i])->delete();
             }

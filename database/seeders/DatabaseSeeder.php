@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             'foto' => '',
         ]);
 
-        Category::factory(50)->create();
+        Category::factory(10000)->create();
+        Supplier::factory(10000)->create();
     }
 }
