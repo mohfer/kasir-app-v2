@@ -15,7 +15,7 @@
                     {{-- Master Data --}}
                     <div class="dropdown">
                         <button
-                            class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'suppliers') ? 'active' : '' }}"
+                            class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Master Data
                         </button>
@@ -28,7 +28,8 @@
                                     href="{{ url('suppliers') }}" wire:navigate>Supplier</a></li>
                             <li><a class="dropdown-item {{ Route::is('users') ? 'active' : '' }}"
                                     href="{{ url('users') }}" wire:navigate>User</a></li>
-                            <li><a class="dropdown-item" href="#">Membership</a></li>
+                            <li><a class="dropdown-item {{ Route::is('membership') ? 'active' : '' }}"
+                                    href="{{ url('membership') }}" wire:navigate>Membership</a></li>
                         </ul>
                     </div>
 

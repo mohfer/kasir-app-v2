@@ -1,11 +1,10 @@
 <div>
     <div class="wrapper">
         <div class="container">
-            <h1 class="text-center mt-5">{{ $title }}</h1>
 
             {{-- Alert --}}
             @if (session()->has('status'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
                     {{ Session::get('status') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -17,7 +16,7 @@
                     {{-- Trigger Bulking Delete --}}
                     <div class="text-start mb-3">
                         @if ($selectedCategoryId)
-                            <button class="btn btn-danger mt-5" data-bs-toggle="modal" data-bs-target="#modalDelete"
+                            <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#modalDelete"
                                 wire:click="deleteConfirmation('')">Delete
                                 {{ count($selectedCategoryId) }} Data</button>
                         @endif
@@ -27,7 +26,7 @@
 
                     {{-- Trigger Modal Tambah --}}
                     <div class="text-end mb-3">
-                        <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
                             data-bs-target="#modalTambah">
                             Tambah Kategori
                         </button>
@@ -103,7 +102,7 @@
             </div>
 
             {{-- Modal Tambah --}}
-            <div wire:ignore.self class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -138,7 +137,7 @@
             </div>
 
             {{-- Modal Update --}}
-            <div wire:ignore.self class="modal fade" id="modalUpdate" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -171,7 +170,7 @@
             </div>
 
             {{-- Modal Delete --}}
-            <div wire:ignore.self class="modal fade" id="modalDelete" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

@@ -3,6 +3,7 @@
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard;
 use App\Livewire\Kategori;
+use App\Livewire\Membership;
 use App\Livewire\Supplier;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/suppliers', Supplier::class)->name('suppliers');
     Route::get('/users', User::class)->name('users');
+    Route::get('/membership', Membership::class)->name('membership');
 });

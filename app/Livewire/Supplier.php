@@ -15,7 +15,7 @@ class Supplier extends Component
     #[Validate('required|unique:suppliers')]
     public $nama;
 
-    #[Validate('required')]
+    #[Validate('required|max:100')]
     public $alamat;
 
     #[Validate('required|email|unique:suppliers')]
@@ -63,27 +63,36 @@ class Supplier extends Component
     {
         $supplier = ModelsSupplier::find($this->supplier_id);
 
+        $newData = [
+            'nama' => $this->nama,
+            'email' => $this->email,
+            'alamat' => $this->alamat,
+            'telp' => $this->telp,
+        ];
+
+        $isChanged = $supplier->nama != $newData['nama'] ||
+            $supplier->email != $newData['email'] ||
+            $supplier->alamat != $newData['alamat'] ||
+            $supplier->telp != $newData['telp'];
+
+        if (!$isChanged) {
+            session()->flash('status', 'Tidak ada perubahan yang dilakukan.');
+            return $this->redirect('/suppliers', navigate: true);
+        }
+
         $this->validate([
             'nama' => 'required|unique:suppliers,nama,' . $this->supplier_id,
             'email' => 'required|email|unique:suppliers,email,' . $this->supplier_id,
-            'alamat' => 'required',
             'telp' => 'required|max:16|unique:suppliers,telp,' . $this->supplier_id,
+            'alamat' => 'required|max:100',
         ]);
 
-        if ($supplier->isDirty('nama', 'email', 'telp', 'alamat')) {
-            $supplier->update([
-                'nama' => $this->nama,
-                'email' => $this->email,
-                'alamat' => $this->alamat,
-                'telp' => $this->telp,
-            ]);
+        $supplier->update($newData);
 
-            session()->flash('status', 'Data Berhasil Diperbarui!');
-        } else {
-            session()->flash('status', 'Tidak ada perubahan yang dilakukan.');
-        }
+        session()->flash('status', 'Data Berhasil Diperbarui!');
         return $this->redirect('/suppliers', navigate: true);
     }
+
 
 
     public function deleteConfirmation($id)
