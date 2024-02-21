@@ -80,7 +80,7 @@
                                         <td>{{ $category->nama_kategori }}</td>
                                         <td class="text-center"><button class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modalUpdate"
-                                                wire:click='edit({{ $category->id }})'>Edit</button> |
+                                                wire:click='edit({{ $category->id }})'>Detail</button> |
                                             <button class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#modalDelete"
                                                 wire:click='deleteConfirmation({{ $category->id }})'>Delete</button>
@@ -102,7 +102,8 @@
             </div>
 
             {{-- Modal Tambah --}}
-            <div wire:ignore.self class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -137,7 +138,8 @@
             </div>
 
             {{-- Modal Update --}}
-            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -170,7 +172,8 @@
             </div>
 
             {{-- Modal Delete --}}
-            <div wire:ignore.self class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

@@ -75,13 +75,6 @@
                                                 <i
                                                     class="bi bi-arrow-up {{ $sortColumn === 'email' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
                                             </span></th>
-                                        <th scope="col" wire:click="sort('alamat')">Alamat <span class="float-end"
-                                                style="cursor: pointer;">
-                                                <i
-                                                    class="bi bi-arrow-down {{ $sortColumn === 'alamat' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
-                                                <i
-                                                    class="bi bi-arrow-up {{ $sortColumn === 'alamat' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
-                                            </span></th>
                                         <th scope="col" wire:click="sort('telp')">Telp <span class="float-end"
                                                 style="cursor: pointer;">
                                                 <i
@@ -101,11 +94,10 @@
                                             <td>{{ $suppliers->firstItem() + $key }}</td>
                                             <td>{{ $supplier->nama }}</td>
                                             <td>{{ $supplier->email }}</td>
-                                            <td>{{ Str::limit($supplier->alamat, 50, '...') }}</td>
                                             <td>{{ $supplier->telp }}</td>
                                             <td class="text-center"><button class="btn btn-warning"
                                                     data-bs-toggle="modal" data-bs-target="#modalUpdate"
-                                                    wire:click='edit({{ $supplier->id }})'>Edit</button> |
+                                                    wire:click='edit({{ $supplier->id }})'>Detail</button> |
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#modalDelete"
                                                     wire:click='deleteConfirmation({{ $supplier->id }})'>Delete</button>
@@ -128,12 +120,13 @@
             </div>
 
             {{-- Modal Tambah --}}
-            <div wire:ignore.self class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah
-                                Supplier</h1>
+                                {{ $title }}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 wire:click='clear()'></button>
                         </div>
@@ -173,7 +166,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'>
+                                        wire:model.lazy='telp' onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -192,11 +185,12 @@
             </div>
 
             {{-- Modal Update --}}
-            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Kategori</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update {{ $title }}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 wire:click='clear()'></button>
                         </div>
@@ -236,7 +230,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'>
+                                        wire:model.lazy='telp' onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -255,11 +249,12 @@
             </div>
 
             {{-- Modal Delete --}}
-            <div wire:ignore.self class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="modalDelete" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Kategori</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Delete {{ $title }}</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>

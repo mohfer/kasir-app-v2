@@ -19,6 +19,9 @@ class User extends Component
     public $username;
 
     public $title = 'Users';
+    public $jenis_kelamin;
+    public $email;
+    public $telp;
     public $user_id;
     public $searchKey;
     public $countUsers;
@@ -30,6 +33,8 @@ class User extends Component
     public function mount()
     {
         $this->selectedRole = 'Admin';
+        $user = ModelsUser::findOrFail(auth()->id());
+        $this->jenis_kelamin = $user->jenis_kelamin;
     }
 
     public function save()
@@ -40,6 +45,7 @@ class User extends Component
             'nama' => $this->nama,
             'username' => strtoupper($this->username),
             'password' => strtolower($this->nama),
+            'jenis_kelamin' => '',
             'role' => $this->selectedRole,
         ]);
 
@@ -51,6 +57,10 @@ class User extends Component
     {
         $user = ModelsUser::find($id);
         $this->nama = $user->nama;
+        $this->username = $user->username;
+        $this->jenis_kelamin = $user->jenis_kelamin;
+        $this->email = $user->email;
+        $this->telp = $user->telp;
         $this->selectedRole = $user->role;
 
         $this->user_id = $id;

@@ -68,27 +68,7 @@
                                                     class="bi bi-arrow-up {{ $sortColumn === 'nama' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
                                             </span>
                                         </th>
-                                        <th scope="col" wire:click="sort('username')">Username <span
-                                                class="float-end" style="cursor: pointer;">
-                                                <i
-                                                    class="bi bi-arrow-down {{ $sortColumn === 'username' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
-                                                <i
-                                                    class="bi bi-arrow-up {{ $sortColumn === 'username' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
-                                            </span></th>
-                                        <th scope="col" wire:click="sort('jenis_kelamin')">Jenis Kelamin <span
-                                                class="float-end" style="cursor: pointer;">
-                                                <i
-                                                    class="bi bi-arrow-down {{ $sortColumn === 'jenis_kelamin' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
-                                                <i
-                                                    class="bi bi-arrow-up {{ $sortColumn === 'jenis_kelamin' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
-                                            </span></th>
-                                        <th scope="col" wire:click="sort('email')">Email <span class="float-end"
-                                                style="cursor: pointer;">
-                                                <i
-                                                    class="bi bi-arrow-down {{ $sortColumn === 'email' && $sortDirection === 'asc' ? '' : 'text-muted' }}"></i>
-                                                <i
-                                                    class="bi bi-arrow-up {{ $sortColumn === 'email' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
-                                            </span></th>
+
                                         <th scope="col" wire:click="sort('telp')">Telp <span class="float-end"
                                                 style="cursor: pointer;">
                                                 <i
@@ -103,7 +83,6 @@
                                                 <i
                                                     class="bi bi-arrow-up {{ $sortColumn === 'role' && $sortDirection === 'desc' ? '' : 'text-muted' }}"></i>
                                             </span></th>
-                                        <th scope="col">Foto</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -115,15 +94,11 @@
                                                     wire:key='{{ $user->id }}'></td>
                                             <td>{{ $users->firstItem() + $key }}</td>
                                             <td>{{ $user->nama }}</td>
-                                            <td>{{ $user->username }}</td>
-                                            <td>{{ $user->jenis_kelamin }}</td>
-                                            <td>{{ $user->email }}</td>
                                             <td>{{ $user->telp }}</td>
                                             <td>{{ $user->role }}</td>
-                                            <td>{{ $user->foto }}</td>
                                             <td class="text-center"><button class="btn btn-warning"
                                                     data-bs-toggle="modal" data-bs-target="#modalUpdate"
-                                                    wire:click='edit({{ $user->id }})'>Edit</button> |
+                                                    wire:click='edit({{ $user->id }})'>Detail</button> |
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#modalDelete"
                                                     wire:click='deleteConfirmation({{ $user->id }})'>Delete</button>
@@ -219,6 +194,51 @@
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
                                         wire:model.lazy='nama'>
                                     @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Username</label>
+                                    <input type="text" class="form-control @error('username') is-invalid @enderror"
+                                        wire:model.lazy='username' disabled>
+                                    @error('username')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Jenis Kelamin</label>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                            id="l" value="L" wire:model="jenis_kelamin" disabled>
+                                        <label class="form-check-label" for="l">Laki - Laki</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                            id="p" value="P" wire:model="jenis_kelamin" disabled>
+                                        <label class="form-check-label" for="p">Perempuan</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Email</label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        wire:model.lazy='email' disabled>
+                                    @error('email')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Telp</label>
+                                    <input type="number" class="form-control @error('telp') is-invalid @enderror"
+                                        wire:model.lazy='telp'
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" disabled>
+                                    @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -2,10 +2,11 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
+use App\Models\Item;
 use Livewire\Component;
-use Livewire\Attributes\Validate;
+use App\Models\Category;
 use Livewire\WithPagination;
+use Livewire\Attributes\Validate;
 
 class Kategori extends Component
 {
@@ -76,18 +77,33 @@ class Kategori extends Component
 
     public function delete()
     {
+        // Hapus kategori berdasarkan category_id
         if (!empty($this->category_id)) {
-            $id = $this->category_id;
-            Category::find($id)->delete();
+            $categoryId = $this->category_id;
+
+            // Perbarui category_id menjadi NULL untuk item yang terkait dengan kategori yang akan dihapus
+            Item::where('category_id', $categoryId)->update(['category_id' => null]);
+
+            // Hapus kategori
+            Category::find($categoryId)->delete();
         }
+
+        // Hapus beberapa kategori yang dipilih berdasarkan selectedCategoryId
         if (!empty($this->selectedCategoryId)) {
-            for ($i = 0; $i < count($this->selectedCategoryId); $i++) {
-                Category::find($this->selectedCategoryId[$i])->delete();
+            foreach ($this->selectedCategoryId as $categoryId) {
+                // Perbarui category_id menjadi NULL untuk item yang terkait dengan kategori yang akan dihapus
+                Item::where('category_id', $categoryId)->update(['category_id' => null]);
+
+                // Hapus kategori
+                Category::find($categoryId)->delete();
             }
         }
+
+        // Setelah penghapusan, beri pesan sukses dan arahkan kembali ke halaman kategori
         session()->flash('status', 'Data Berhasil Dihapus!');
-        return $this->redirect('/kategori', navigate: true);
+        return redirect('/kategori');
     }
+
 
     public function updatingSearchKey()
     {

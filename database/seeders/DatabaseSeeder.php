@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Membership;
 use App\Models\Supplier;
 use App\Models\User;
@@ -31,9 +32,10 @@ class DatabaseSeeder extends Seeder
             'foto' => '',
         ]);
 
-        User::factory(50)->create();
-        Category::factory(50)->create();
-        Supplier::factory(50)->create();
-        Membership::factory(50)->create();
+        // User::factory(50)->create();
+        // Category::factory(50)->create();
+        // Item::factory(50)->create();
+        // Supplier::factory(50)->create();
+        // Membership::factory(50)->create();
     }
 }

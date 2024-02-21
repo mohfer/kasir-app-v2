@@ -14,15 +14,21 @@ class Membership extends Component
     protected $paginationTheme = 'bootstrap';
 
     #[Validate('required')]
-    public $nama, $selectedAktif, $diskon;
+    public $nama;
 
-    #[Validate('required|unique:memberships')]
+    #[Validate('required|numeric|max:100')]
+    public $diskon;
+
+    #[Validate('required|unique:memberships|max:13')]
     public $telp;
 
-    #[Validate('required|unique:memberships|email')]
+    #[Validate('required|unique:memberships|email|')]
     public $email;
 
     public $title = 'Membership';
+    public $selectedAktif;
+    public $tgl_berlangganan;
+
     public $member_id;
     public $kode_member;
     public $selectAll = false;
@@ -34,8 +40,8 @@ class Membership extends Component
 
     public function mount()
     {
-        $this->selectedAktif = 'Ya';
         $this->generateKodeMember();
+        $this->diskon = 5;
     }
 
     public function generateKodeMember()
@@ -58,7 +64,7 @@ class Membership extends Component
             'telp' => $this->telp,
             'diskon' => 5,
             'tgl_berlangganan' => now()->toDateString(),
-            'aktif' => $this->selectedAktif,
+            'aktif' => 'Aktif',
         ]);
 
         session()->flash('status', 'Data Berhasil Ditambah!');
@@ -72,6 +78,7 @@ class Membership extends Component
         $this->nama = $member->nama;
         $this->email = $member->email;
         $this->telp = $member->telp;
+        $this->tgl_berlangganan = $member->tgl_berlangganan;
         $this->diskon = $member->diskon;
         $this->selectedAktif = $member->aktif;
 
@@ -102,9 +109,9 @@ class Membership extends Component
         }
 
         $this->validate([
-            'nama' => 'required|unique:memberships,nama,' . $this->member_id,
+            'nama' => 'required',
             'email' => 'required|unique:memberships,email,' . $this->member_id,
-            'telp' => 'required|unique:memberships,telp,' . $this->member_id,
+            'telp' => 'required|unique:memberships,telp,' . $this->member_id . ',id|max:13',
             'diskon' => 'required|numeric|max:100',
         ]);
 

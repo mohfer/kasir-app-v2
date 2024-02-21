@@ -21,7 +21,7 @@ class Supplier extends Component
     #[Validate('required|email|unique:suppliers')]
     public $email;
 
-    #[Validate('required|max:16|unique:suppliers')]
+    #[Validate('required|max:13|unique:suppliers')]
     public $telp;
 
     public $title = 'Suppliers';
@@ -83,7 +83,7 @@ class Supplier extends Component
         $this->validate([
             'nama' => 'required|unique:suppliers,nama,' . $this->supplier_id,
             'email' => 'required|email|unique:suppliers,email,' . $this->supplier_id,
-            'telp' => 'required|max:16|unique:suppliers,telp,' . $this->supplier_id,
+            'telp' => 'required|max:13|unique:suppliers,telp,' . $this->supplier_id,
             'alamat' => 'required|max:100',
         ]);
 

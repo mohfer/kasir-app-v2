@@ -15,15 +15,15 @@
                     {{-- Master Data --}}
                     <div class="dropdown">
                         <button
-                            class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
+                            class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'items', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Master Data
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item {{ Route::is('kategori') ? 'active' : '' }}"
                                     href="{{ url('kategori') }}" wire:navigate>Kategori</a></li>
-                            <li><a class="dropdown-item {{ Route::is('barang') ? 'active' : '' }}"
-                                    href="{{ url('barang') }}" wire:navigate>Barang</a></li>
+                            <li><a class="dropdown-item {{ Route::is('items') ? 'active' : '' }}"
+                                    href="{{ url('items') }}" wire:navigate>Barang</a></li>
                             <li><a class="dropdown-item {{ Route::is('suppliers') ? 'active' : '' }}"
                                     href="{{ url('suppliers') }}" wire:navigate>Supplier</a></li>
                             <li><a class="dropdown-item {{ Route::is('users') ? 'active' : '' }}"
@@ -35,14 +35,18 @@
 
                     {{-- Stok --}}
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button
+                            class="btn btn-primary dropdown-toggle {{ Route::is('stok-gudang', 'stok-etalase', 'riwayat-stok') ? 'active' : '' }}"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Stok
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Stok Gudang</a></li>
-                            <li><a class="dropdown-item" href="#">Stok Etalase</a></li>
-                            <li><a class="dropdown-item" href="#">Riwayat Stok</a></li>
+                            <li><a class="dropdown-item {{ Route::is('stok-gudang') ? 'active' : '' }}"
+                                    href="{{ url('stok-gudang') }}" wire:navigate>Stok Gudang</a></li>
+                            <li><a class="dropdown-item {{ Route::is('stok-etalase') ? 'active' : '' }}"
+                                    href="{{ url('stok-etalase') }}" wire:navigate>Stok Etalase</a></li>
+                            <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
+                                    href="{{ url('riwayat-stok') }}" wire:navigate>Riwayat Stok</a></li>
                         </ul>
                     </div>
 
@@ -64,13 +68,13 @@
 
                     {{-- Profile --}}
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn btn-primary dropdown-toggle {{ Route::is('profile') ? 'active' : '' }}"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Profile
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
+                                    href="{{ url('profile') }}" wire:navigate>Profile</a></li>
                             <hr>
                             <li><button class="dropdown-item" wire:click='logout'>Logout</button></li>
                         </ul>
