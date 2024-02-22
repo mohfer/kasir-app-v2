@@ -5,14 +5,21 @@ namespace App\Livewire;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\Membership;
+use App\Models\Stock;
+use App\Models\TransactionDetail;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Transaction as ModelsTransaction;
 
 class Transaction extends Component
 {
+    #[Validate('required|numeric|min:1')]
+    public $qty;
 
     public $searchKey;
     public $cartItems = [];
     public $cartItemsData = [];
-    public $qty;
     public $selectedMembership = 0;
     public $discount;
     public $subtotal = 0;
@@ -35,17 +42,39 @@ class Transaction extends Component
             $this->cartItems[] = $itemId;
             $this->getCartItems();
             $this->qty[$itemId] = 1;
-            $this->calculateTotalSetelahDiskon();
-            $this->updateKembalian();
         } else {
-            $this->qty[$itemId] += 1;
+            session()->flash('error', 'Item sudah ada di dalam cart.');
         }
+        $this->updateKembalian();
     }
+
 
     public function updateQty($itemId, $qty)
     {
+        $item = Item::find($itemId);
+
+        if (!$item) {
+            session()->flash('error', 'Item tidak ditemukan.');
+            return;
+        }
+
+        $stockEtalase = $item->stock->stok_etalase ?? 0;
+
+        if (empty($qty) || $qty <= 0) {
+            session()->flash('error', 'Quantity harus diisi dan harus lebih dari 0.');
+            return;
+        }
+
+        if ($qty > $stockEtalase) {
+            session()->flash('error', 'Quantity melebihi stok etalase.');
+            return;
+        }
+
         $this->qty[$itemId] = $qty;
+        $this->updateKembalian();
     }
+
+
 
     public function removeFromCart($itemId)
     {
@@ -103,29 +132,54 @@ class Transaction extends Component
 
     public function updateKembalian()
     {
-        $subtotal = $this->subtotal;
+        $totalSetelahDiskon = $this->totalSetelahDiskon;
+        $totalBayar = $this->totalBayar;
 
-        if ($this->selectedMembership != 0) {
-            $membership = Membership::find($this->selectedMembership);
-            if ($membership) {
-                $diskon = $membership->diskon;
-                $totalSetelahDiskon = $subtotal * (1 - $diskon / 100);
-                if ($this->totalBayar != '') {
-                    $this->kembalian = $this->totalBayar - $totalSetelahDiskon;
-                }
+        if ($totalBayar != '') {
+            $kembalian = $totalBayar - $totalSetelahDiskon;
+            if ($kembalian < 0) {
+                $kembalian = 0;
             }
+            $this->kembalian = $kembalian;
         } else {
-            if ($this->totalBayar != '') {
-                $this->kembalian = $this->totalBayar - $this->subtotal;
-            } else {
-                $this->kembalian = 0;
-            }
-        }
-        if ($this->kembalian < 0) {
             $this->kembalian = 0;
         }
     }
 
+    public function bayar()
+    {
+        DB::transaction(function () {
+            ModelsTransaction::create([
+                'kode_transaksi' => $this->kode_transaksi,
+                'membership_id' => $this->selectedMembership,
+                'user_id' => Auth::id(),
+                'diskon' => $this->discount,
+                'total' => $this->totalSetelahDiskon,
+                'bayar' => $this->totalBayar,
+                'kembalian' => $this->kembalian,
+            ]);
+
+            foreach ($this->cartItemsData as $item) {
+                $stok = Stock::where('item_id', $item['id'])->first();
+
+                if ($stok) {
+                    $stok->update(['stok_etalase' => $stok->stok_etalase - $this->qty[$item['id']]]);
+                } else {
+                    session()->flash('success', 'Transaksi Gagal!');
+                    return $this->redirect('/transaction', navigate: true);
+                }
+                TransactionDetail::create([
+                    'transaction_id' => ModelsTransaction::latest()->first()->id,
+                    'item_id' => $item['id'],
+                    'qty' => $this->qty[$item['id']],
+                    'subtotal' => $this->subtotal
+                ]);
+            }
+        });
+
+        session()->flash('success', 'Transaksi berhasil!');
+        return $this->redirect('/transaction', navigate: true);
+    }
 
     public function render()
     {

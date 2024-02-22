@@ -101,8 +101,6 @@ class StokGudang extends Component
                     ['item_id' => $this->selectedItemId],
                     ['stok_gudang' => DB::raw('stok_gudang + ' . $this->jumlah_item)]
                 );
-
-                // Buat entri baru dalam StokHistory
                 StokHistory::create([
                     'no_faktur' => $this->no_faktur,
                     'item_id' => $this->selectedItemId,
@@ -113,7 +111,6 @@ class StokGudang extends Component
                     'kembali' => $this->kembali,
                     'keterangan' => 'Gudang',
                 ]);
-                // Buat entri baru di tabel Item dengan stock_id yang sesuai
                 $item = Item::find($this->selectedItemId);
                 if ($item) {
                     $item->update([

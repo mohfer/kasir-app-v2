@@ -1,6 +1,18 @@
 <div>
     <div class="wrapper">
         <div class="container">
+            @if (session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ Session::get('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if (session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    {{ Session::get('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="row mt-3">
                 <div class="col-md-4 mb-3">
                     <div class="card">
@@ -125,7 +137,8 @@
                                     </div>
                                     <div class="col text-end">
                                         <span>
-                                            {{ $kembalian }}
+                                            <input type="text" class="form-control" wire:model.live="kembalian"
+                                                disabled>
                                         </span><br>
                                     </div>
                                 </div>
