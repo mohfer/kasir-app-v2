@@ -119,7 +119,7 @@
                                         Kategori</label>
                                     <input type="text"
                                         class="form-control @error('nama_kategori') is-invalid @enderror"
-                                        wire:model.lazy='nama_kategori'>
+                                        wire:model.live='nama_kategori'>
                                     @error('nama_kategori')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -153,7 +153,7 @@
                                     <label for="" class="form-label">Nama Kategori</label>
                                     <input type="text"
                                         class="form-control @error('nama_kategori') is-invalid @enderror"
-                                        wire:model.lazy='nama_kategori'>
+                                        wire:model.live='nama_kategori'>
                                     @error('nama_kategori')
                                         <div class="invalid-feedback">
                                             {{ $message }}

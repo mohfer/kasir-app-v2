@@ -51,7 +51,8 @@
                     </div>
 
                     {{-- Transaksi --}}
-                    <a class="btn btn-primary text-start" href="#">Transaksi</a>
+                    <a class="btn btn-primary text-start {{ Route::is('transaction') ? 'active' : '' }}"
+                        href="{{ url('transaction') }}" wire:navigate>Transaksi</a>
 
                     {{-- Laporan --}}
                     <div class="dropdown">

@@ -149,7 +149,7 @@
                                     <label for="" class="form-label">Kode Member</label>
                                     <input type="kode_member"
                                         class="form-control @error('kode_member') is-invalid @enderror"
-                                        wire:model.lazy='kode_member' disabled>
+                                        wire:model.live='kode_member' disabled>
                                     @error('kode_member')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -159,7 +159,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -169,7 +169,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email'>
+                                        wire:model.live='email'>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -179,7 +179,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'
+                                        wire:model.live='telp'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
@@ -214,7 +214,7 @@
                                     <label for="" class="form-label">Kode Member</label>
                                     <input type="kode_member"
                                         class="form-control @error('kode_member') is-invalid @enderror"
-                                        wire:model.lazy='kode_member' disabled>
+                                        wire:model.live='kode_member' disabled>
                                     @error('kode_member')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -224,7 +224,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -234,7 +234,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email'>
+                                        wire:model.live='email'>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -244,7 +244,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'
+                                        wire:model.live='telp'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
@@ -255,7 +255,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Diskon</label>
                                     <input type="number" class="form-control @error('diskon') is-invalid @enderror"
-                                        wire:model.lazy='diskon'
+                                        wire:model.live='diskon'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('diskon')
                                         <div class="invalid-feedback">
@@ -267,7 +267,7 @@
                                     <label for="" class="form-label">Tanggal Berlangganan</label>
                                     <input type="tgl_berlangganan"
                                         class="form-control @error('tgl_berlangganan') is-invalid @enderror"
-                                        wire:model.lazy='tgl_berlangganan' disabled>
+                                        wire:model.live='tgl_berlangganan' disabled>
                                     @error('tgl_berlangganan')
                                         <div class="invalid-feedback">
                                             {{ $message }}

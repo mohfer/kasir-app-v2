@@ -134,14 +134,14 @@
                         <div class="modal-body">
                             <form wire:submit.prevent='save'>
                                 <div class="mb-3">
-                                    <small><span class="text-danger">*Password akan ter isi
+                                    <small><span class="text-danger">*Password akan terisi
                                             otomatis sesuai dengan nama dan menggunakan huruf
                                             kecil.</span></small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -159,7 +159,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Username</label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                        wire:model.lazy='username'>
+                                        wire:model.live='username'>
                                     @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -192,7 +192,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -202,7 +202,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Username</label>
                                     <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                        wire:model.lazy='username' disabled>
+                                        wire:model.live='username' disabled>
                                     @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -226,7 +226,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email' disabled>
+                                        wire:model.live='email' disabled>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -236,7 +236,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'
+                                        wire:model.live='telp'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57" disabled>
                                     @error('telp')
                                         <div class="invalid-feedback">

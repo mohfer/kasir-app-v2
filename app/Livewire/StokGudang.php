@@ -99,7 +99,7 @@ class StokGudang extends Component
 
                 $newStock = Stock::updateOrCreate(
                     ['item_id' => $this->selectedItemId],
-                    ['stok_gudang' => DB::raw('stok_gudang + ' . $this->jumlah_item), 'stok_etalase' => 0]
+                    ['stok_gudang' => DB::raw('stok_gudang + ' . $this->jumlah_item)]
                 );
 
                 // Buat entri baru dalam StokHistory

@@ -122,7 +122,7 @@
                                     <label for="" class="form-label">Nomor
                                         Faktur</label>
                                     <input type="number" class="form-control @error('no_faktur') is-invalid @enderror"
-                                        wire:model.lazy='no_faktur'
+                                        wire:model.live='no_faktur'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('no_faktur')
                                         <div class="invalid-feedback">
@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Barang</label>
-                                    <select class="form-select" wire:model="selectedItemId">
+                                    <select class="form-select" wire:model.change="selectedItemId">
                                         @if ($items->isEmpty())
                                             <option>Data tidak ditemukan</option>
                                         @else
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Supplier</label>
-                                    <select class="form-select" wire:model="selectedSupplierId">
+                                    <select class="form-select" wire:model.change="selectedSupplierId">
                                         @if ($suppliers->isEmpty())
                                             <option>Data tidak ditemukan</option>
                                         @else
@@ -162,7 +162,7 @@
                                             <label for="" class="form-label">Jumlah</label>
                                             <input type="number"
                                                 class="form-control @error('jumlah_item') is-invalid @enderror"
-                                                wire:model.lazy='jumlah_item'
+                                                wire:model.live='jumlah_item'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('jumlah_item')
                                                 <div class="invalid-feedback">
@@ -176,7 +176,7 @@
                                             <label for="" class="form-label">Harga</label>
                                             <input type="number"
                                                 class="form-control @error('harga') is-invalid @enderror"
-                                                wire:model.lazy='harga' disabled>
+                                                wire:model.live='harga' disabled>
                                             @error('harga')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -191,7 +191,7 @@
                                             <label for="" class="form-label">Bayar</label>
                                             <input type="number"
                                                 class="form-control @error('bayar') is-invalid @enderror"
-                                                wire:model.lazy='bayar'
+                                                wire:model.live='bayar'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('bayar')
                                                 <div class="invalid-feedback">
@@ -205,7 +205,7 @@
                                             <label for="" class="form-label">Kembali</label>
                                             <input type="number"
                                                 class="form-control @error('kembali') is-invalid @enderror"
-                                                wire:model.lazy='kembali' disabled>
+                                                wire:model.live='kembali' disabled>
                                             @error('kembali')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

@@ -14,7 +14,7 @@
                         <div class="form-group mb-3">
                             <span>Username</span>
                             <input type="text" class="form-control @error('username') is-invalid @enderror"
-                                value="{{ old('username') }}" wire:model.lazy='username'>
+                                value="{{ old('username') }}" wire:model.live='username'>
                             @error('username')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -25,7 +25,7 @@
                             <span>Password</span>
                             <input type="{{ $showPassword ? 'text' : 'password' }}"
                                 class="form-control  @error('password') is-invalid @enderror"
-                                wire:model.lazy='password'>
+                                wire:model.live='password'>
                             @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}

@@ -113,7 +113,8 @@
                             <form wire:submit.prevent='save'>
                                 <div class="mb-3">
                                     <label class="form-label">Barang</label>
-                                    <select id="selectedStockId" class="form-select" wire:model="selectedStockId">
+                                    <select id="selectedStockId" class="form-select"
+                                        wire:model.change="selectedStockId">
                                         @if ($stocks->isEmpty())
                                             <option>Data tidak ditemukan</option>
                                         @else
@@ -129,7 +130,7 @@
                                     <label for="jumlah_item_gudang" class="form-label">Jumlah di Gudang</label>
                                     <input type="number" id="jumlah_item_gudang"
                                         class="form-control @error('jumlah_item_gudang') is-invalid @enderror"
-                                        wire:model.lazy='jumlah_item_gudang' disabled>
+                                        wire:model.live='jumlah_item_gudang' disabled>
                                     @error('jumlah_item_gudang')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -140,7 +141,7 @@
                                     <label for="" class="form-label">Pindahkan ke Etalase</label>
                                     <input type="number"
                                         class="form-control @error('jumlah_item_etalase') is-invalid @enderror"
-                                        wire:model.lazy='jumlah_item_etalase'
+                                        wire:model.live='jumlah_item_etalase'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('jumlah_item_etalase')
                                         <div class="invalid-feedback">

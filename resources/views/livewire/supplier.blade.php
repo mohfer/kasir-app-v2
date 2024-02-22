@@ -136,7 +136,7 @@
                                     <label for="" class="form-label">Nama
                                         Supplier</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -146,7 +146,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email'>
+                                        wire:model.live='email'>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -156,7 +156,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Alamat</label>
                                     <textarea cols="30" rows="3" class="form-control @error('alamat') is-invalid @enderror"
-                                        wire:model.lazy='alamat'></textarea>
+                                        wire:model.live='alamat'></textarea>
                                     @error('alamat')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -166,7 +166,8 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp' onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        wire:model.live='telp'
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -200,7 +201,7 @@
                                     <label for="" class="form-label">Nama
                                         Supplier</label>
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                        wire:model.lazy='nama'>
+                                        wire:model.live='nama'>
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -210,7 +211,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email'>
+                                        wire:model.live='email'>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -220,7 +221,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Alamat</label>
                                     <textarea cols="30" rows="3" class="form-control @error('alamat') is-invalid @enderror"
-                                        wire:model.lazy='alamat'></textarea>
+                                        wire:model.live='alamat'></textarea>
                                     @error('alamat')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -230,7 +231,8 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp' onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        wire:model.live='telp'
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
                                             {{ $message }}

@@ -34,7 +34,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Username</label>
                                     <input type="username" class="form-control @error('username') is-invalid @enderror"
-                                        wire:model.lazy='username' disabled>
+                                        wire:model.live='username' disabled>
                                     @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -58,7 +58,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.lazy='email'>
+                                        wire:model.live='email'>
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -68,7 +68,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Telp</label>
                                     <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.lazy='telp'
+                                        wire:model.live='telp'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('telp')
                                         <div class="invalid-feedback">
@@ -79,7 +79,7 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Foto</label>
                                     <input type="file" class="form-control @error('foto') is-invalid @enderror"
-                                        wire:model.lazy='foto'
+                                        wire:model.live='foto'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     @error('foto')
                                         <div class="invalid-feedback">

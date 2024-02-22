@@ -27,6 +27,12 @@ class StokEtalase extends Component
         }
     }
 
+    public function updatedSelectedStockId($value)
+    {
+        $stock = Stock::find($value);
+        $this->jumlah_item_gudang = $stock->stok_gudang;
+    }
+
     public function updatedJumlahItemEtalase($value)
     {
         $this->updateJumlahItemGudang();

@@ -40,4 +40,8 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function transaction_detail(): HasMany
+    {
+        return $this->hasMany(TransactionDetail::class);
+    }
 }

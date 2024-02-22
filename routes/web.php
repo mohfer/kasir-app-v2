@@ -9,6 +9,7 @@ use App\Livewire\Profile;
 use App\Livewire\StokEtalase;
 use App\Livewire\StokGudang;
 use App\Livewire\Supplier;
+use App\Livewire\Transaction;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/stok-gudang', StokGudang::class)->name('stok-gudang');
     Route::get('/stok-etalase', StokEtalase::class)->name('stok-etalase');
+
+    Route::get('/transaction', Transaction::class)->name('transaction');
 
 
 

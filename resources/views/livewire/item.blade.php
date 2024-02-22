@@ -114,8 +114,8 @@
                                                     {{ $item->category->nama_kategori }}
                                                 @endisset
                                             </td>
-                                            <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                            <td>{{ number_format($item->harga_jual_akhir, 0, ',', '.') }}</td>
+                                            <td>{{ number_format($item->harga_beli) }}</td>
+                                            <td>{{ number_format($item->harga_jual_akhir) }}</td>
                                             <td>
                                                 @isset($item->stock)
                                                     {{ $item->stock->stok_gudang + $item->stock->stok_etalase }}
@@ -166,7 +166,7 @@
                                         {{ $title }}</label>
                                     <input type="text"
                                         class="form-control @error('kode_barang') is-invalid @enderror"
-                                        wire:model.lazy='kode_barang' disabled>
+                                        wire:model.live='kode_barang' disabled>
                                     @error('kode_barang')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -178,7 +178,7 @@
                                         {{ $title }}</label>
                                     <input type="text"
                                         class="form-control @error('nama_barang') is-invalid @enderror"
-                                        wire:model.lazy='nama_barang'>
+                                        wire:model.live='nama_barang'>
                                     @error('nama_barang')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -187,7 +187,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Pilih Kategori</label>
-                                    <select class="form-select" wire:model="selectedCategory">
+                                    <select class="form-select" wire:model.change="selectedCategory">
                                         @if ($categories->isEmpty())
                                             <option>Data tidak ditemukan</option>
                                         @else
@@ -204,7 +204,7 @@
                                             <label for="" class="form-label">Harga Beli</label>
                                             <input type="number"
                                                 class="form-control @error('harga_beli') is-invalid @enderror"
-                                                wire:model.lazy='harga_beli'
+                                                wire:model.live='harga_beli'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('harga_beli')
                                                 <div class="invalid-feedback">
@@ -218,7 +218,7 @@
                                             <label for="" class="form-label">Harga Jual Awal</label>
                                             <input type="number"
                                                 class="form-control @error('harga_jual_awal') is-invalid @enderror"
-                                                wire:model.lazy='harga_jual_awal'
+                                                wire:model.live='harga_jual_awal'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('harga_jual_awal')
                                                 <div class="invalid-feedback">
@@ -234,7 +234,7 @@
                                             <label for="" class="form-label">Diskon</label>
                                             <input type="number"
                                                 class="form-control @error('diskon') is-invalid @enderror"
-                                                wire:model.lazy='diskon'
+                                                wire:model.live='diskon'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('diskon')
                                                 <div class="invalid-feedback">
@@ -248,7 +248,7 @@
                                             <label for="" class="form-label">Harga Jual Akhir</label>
                                             <input type="number"
                                                 class="form-control @error('harga_jual_akhir') is-invalid @enderror"
-                                                wire:model.lazy='harga_jual_akhir' disabled>
+                                                wire:model.live='harga_jual_akhir' disabled>
                                             @error('harga_jual_akhir')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -285,7 +285,7 @@
                                         {{ $title }}</label>
                                     <input type="text"
                                         class="form-control @error('kode_barang') is-invalid @enderror"
-                                        wire:model.lazy='kode_barang' disabled>
+                                        wire:model.live='kode_barang' disabled>
                                     @error('kode_barang')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -297,7 +297,7 @@
                                         {{ $title }}</label>
                                     <input type="text"
                                         class="form-control @error('nama_barang') is-invalid @enderror"
-                                        wire:model.lazy='nama_barang'>
+                                        wire:model.live='nama_barang'>
                                     @error('nama_barang')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -306,7 +306,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Kategori</label>
-                                    <select class="form-select" wire:model="selectedCategory">
+                                    <select class="form-select" wire:model.change="selectedCategory">
                                         @if ($categories->isEmpty())
                                             <option>Data tidak ditemukan</option>
                                         @else
@@ -323,7 +323,7 @@
                                             <label for="" class="form-label">Harga Beli</label>
                                             <input type="number"
                                                 class="form-control @error('harga_beli') is-invalid @enderror"
-                                                wire:model.lazy='harga_beli'
+                                                wire:model.live='harga_beli'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('harga_beli')
                                                 <div class="invalid-feedback">
@@ -337,7 +337,7 @@
                                             <label for="" class="form-label">Harga Jual Awal</label>
                                             <input type="number"
                                                 class="form-control @error('harga_jual_awal') is-invalid @enderror"
-                                                wire:model.lazy='harga_jual_awal'
+                                                wire:model.live='harga_jual_awal'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('harga_jual_awal')
                                                 <div class="invalid-feedback">
@@ -353,7 +353,7 @@
                                             <label for="" class="form-label">Diskon</label>
                                             <input type="number"
                                                 class="form-control @error('diskon') is-invalid @enderror"
-                                                wire:model.lazy='diskon'
+                                                wire:model.live='diskon'
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             @error('diskon')
                                                 <div class="invalid-feedback">
@@ -367,7 +367,7 @@
                                             <label for="" class="form-label">Harga Jual Akhir</label>
                                             <input type="number"
                                                 class="form-control @error('harga_jual_akhir') is-invalid @enderror"
-                                                wire:model.lazy='harga_jual_akhir' disabled>
+                                                wire:model.live='harga_jual_akhir' disabled>
                                             @error('harga_jual_akhir')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
