@@ -33,16 +33,16 @@ Route::get('/login', Login::class)->name('auth.login')->middleware('guest');
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
-    Route::get('/items', Item::class)->name('items');
-    Route::get('/kategori', Kategori::class)->name('kategori');
-    Route::get('/suppliers', Supplier::class)->name('suppliers');
-    Route::get('/users', User::class)->name('users');
-    Route::get('/membership', Membership::class)->name('membership');
+    Route::get('/items', Item::class)->name('items')->middleware('checkrole:Admin,Gudang');
+    Route::get('/kategori', Kategori::class)->name('kategori')->middleware('checkrole:Admin,Gudang');
+    Route::get('/suppliers', Supplier::class)->name('suppliers')->middleware('checkrole:Admin,Gudang');
+    Route::get('/users', User::class)->name('users')->middleware('checkrole:Admin');
+    Route::get('/membership', Membership::class)->name('membership')->middleware('checkrole:Admin,Kasir');
 
-    Route::get('/stok-gudang', StokGudang::class)->name('stok-gudang');
-    Route::get('/stok-etalase', StokEtalase::class)->name('stok-etalase');
+    Route::get('/stok-gudang', StokGudang::class)->name('stok-gudang')->middleware('checkrole:Admin,Gudang');
+    Route::get('/stok-etalase', StokEtalase::class)->name('stok-etalase')->middleware('checkrole:Admin,Gudang');
 
-    Route::get('/transaction', Transaction::class)->name('transaction');
+    Route::get('/transaction', Transaction::class)->name('transaction')->middleware('checkrole:Admin,Kasir');
 
 
 

@@ -4,24 +4,13 @@
 
             {{-- Alert --}}
             @if (session()->has('status'))
-                <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     {{ Session::get('status') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             <div class="row">
-                <div class="col">
-
-                    {{-- Trigger Bulking Delete --}}
-                    <div class="text-start mb-3">
-                        @if ($selectedMemberId)
-                            <button class="btn btn-danger mt-5" data-bs-toggle="modal" data-bs-target="#modalDelete"
-                                wire:click="deleteConfirmation('')">Delete
-                                {{ count($selectedMemberId) }} Data</button>
-                        @endif
-                    </div>
-                </div>
                 <div class="col">
 
                     {{-- Trigger Modal Tambah --}}
@@ -55,10 +44,6 @@
                             <table class="table table-striped table-bordered mt-3">
                                 <thead class="table-primary">
                                     <tr>
-                                        <th scope="col" class="text-center">
-                                            <input type="checkbox" class="form-check-input" wire:model="selectAll"
-                                                wire:click="toggleSelectAll">
-                                        </th>
                                         <th scope="col">No</th>
                                         <th scope="col" wire:click="sort('kode_member')">Kode Member
                                             <span class="float-end" style="cursor: pointer;">
@@ -96,9 +81,6 @@
                                 <tbody>
                                     @foreach ($members as $key => $member)
                                         <tr>
-                                            <td class="text-center"><input type="checkbox" class="form-check-input"
-                                                    value="{{ $member->id }}" wire:model.live='selectedMemberId'
-                                                    wire:key='{{ $member->id }}'></td>
                                             <td>{{ $members->firstItem() + $key }}</td>
                                             <td>{{ $member->kode_member }}</td>
                                             <td>{{ $member->nama }}</td>

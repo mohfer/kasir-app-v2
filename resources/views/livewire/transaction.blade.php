@@ -154,7 +154,6 @@
                                 <div class="col">
                                     <label class="form-label">Customer</label>
                                     <select class="form-select" wire:model.change="selectedMembership">
-                                        <option value="0">Umum</option>
                                         @foreach ($memberships as $membership)
                                             <option value="{{ $membership->id }}">{{ $membership->nama }}</option>
                                         @endforeach

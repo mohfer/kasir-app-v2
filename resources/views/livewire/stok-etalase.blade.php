@@ -4,7 +4,7 @@
 
             {{-- Alert --}}
             @if (session()->has('status'))
-                <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     {{ Session::get('status') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

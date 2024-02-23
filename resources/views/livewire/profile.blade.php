@@ -12,8 +12,8 @@
                                 alt="Profile Picture">
                         </div>
                         <div class="card-body text-center">
-                            <h3 class="fw-bold">Admin</h3>
-                            <p class="fs-4">Mohamad Ferdiansyah</p>
+                            <h3 class="fw-bold">{{ $role }}</h3>
+                            <p class="fs-4">{{ $nama }}</p>
                         </div>
                     </div>
                 </div>

@@ -25,8 +25,6 @@ class User extends Component
     public $user_id;
     public $searchKey;
     public $countUsers;
-    public $selectedUserId = [];
-    public $selectAll = false;
     public $sortColumn = 'nama';
     public $sortDirection = 'asc';
 
@@ -43,7 +41,7 @@ class User extends Component
 
         ModelsUser::create([
             'nama' => $this->nama,
-            'username' => strtoupper($this->username),
+            'username' => strtolower($this->username),
             'password' => strtolower($this->nama),
             'jenis_kelamin' => '',
             'role' => $this->selectedRole,
@@ -95,22 +93,13 @@ class User extends Component
 
     public function deleteConfirmation($id)
     {
-        if (!empty($id)) {
-            $this->user_id = $id;
-        }
+        $this->user_id = $id;
     }
 
     public function delete()
     {
-        if (!empty($this->user_id)) {
-            $id = $this->user_id;
-            ModelsUser::find($id)->delete();
-        }
-        if (!empty($this->selectedUserId)) {
-            for ($i = 0; $i < count($this->selectedUserId); $i++) {
-                ModelsUser::find($this->selectedUserId[$i])->delete();
-            }
-        }
+        $id = $this->user_id;
+        ModelsUser::find($id)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
         return $this->redirect('/users', navigate: true);
     }
@@ -132,15 +121,6 @@ class User extends Component
     {
         $this->sortColumn = $columnName;
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    }
-
-    public function toggleSelectAll()
-    {
-        if ($this->selectAll) {
-            $this->selectedUserId = ModelsUser::pluck('id')->toArray();
-        } else {
-            $this->selectedUserId = [];
-        }
     }
 
     public function render()

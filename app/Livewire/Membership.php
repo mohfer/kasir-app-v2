@@ -31,8 +31,6 @@ class Membership extends Component
 
     public $member_id;
     public $kode_member;
-    public $selectAll = false;
-    public $selectedMemberId = [];
     public $sortColumn = 'nama';
     public $sortDirection = 'asc';
     public $countMembers;
@@ -64,7 +62,7 @@ class Membership extends Component
             'telp' => $this->telp,
             'diskon' => 5,
             'tgl_berlangganan' => now()->toDateString(),
-            'aktif' => 'Aktif',
+            'aktif' => 'Ya',
         ]);
 
         session()->flash('status', 'Data Berhasil Ditambah!');
@@ -134,22 +132,13 @@ class Membership extends Component
 
     public function deleteConfirmation($id)
     {
-        if (!empty($id)) {
-            $this->member_id = $id;
-        }
+        $this->member_id = $id;
     }
 
     public function delete()
     {
-        if (!empty($this->member_id)) {
-            $id = $this->member_id;
-            ModelsMembership::find($id)->delete();
-        }
-        if (!empty($this->selectedMemberId)) {
-            for ($i = 0; $i < count($this->selectedMemberId); $i++) {
-                ModelsMembership::find($this->selectedMemberId[$i])->delete();
-            }
-        }
+        $id = $this->member_id;
+        ModelsMembership::find($id)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
         return $this->redirect('/membership', navigate: true);
     }
@@ -158,15 +147,6 @@ class Membership extends Component
     {
         $this->sortColumn = $columnName;
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    }
-
-    public function toggleSelectAll()
-    {
-        if ($this->selectAll) {
-            $this->selectedMemberId = ModelsMembership::pluck('id')->toArray();
-        } else {
-            $this->selectedMemberId = [];
-        }
     }
 
     public function render()

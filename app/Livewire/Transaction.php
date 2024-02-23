@@ -20,7 +20,7 @@ class Transaction extends Component
     public $searchKey;
     public $cartItems = [];
     public $cartItemsData = [];
-    public $selectedMembership = 0;
+    public $selectedMembership;
     public $discount;
     public $subtotal = 0;
     public $totalBayar;
@@ -31,6 +31,11 @@ class Transaction extends Component
     public function mount()
     {
         $this->qty = collect();
+        $this->selectedMembership;
+        $firstMember = Membership::first();
+        if ($firstMember) {
+            $this->selectedMembership = $firstMember->id;
+        }
         $this->discount = 0;
         $this->kembalian = 0;
         $this->kode_transaksi = 'TRX-' . time();
@@ -193,7 +198,7 @@ class Transaction extends Component
 
         $items = $items->get();
 
-        $memberships = Membership::where('aktif', 'Aktif')->get();
+        $memberships = Membership::where('aktif', 'Ya')->get();
 
         return view('livewire.transaction', [
             'items' => $items,

@@ -7,7 +7,6 @@ use App\Models\Category;
 use Livewire\WithPagination;
 use Livewire\Attributes\Validate;
 use App\Models\Item as ModelsItem;
-use App\Models\Stock;
 
 class Item extends Component
 {
@@ -30,8 +29,6 @@ class Item extends Component
     public $sortDirection = 'asc';
     public $countItems;
     public $searchKey;
-    public $selectedItemId = [];
-    public $selectAll;
     public $errorMessage;
 
     public function mount()
@@ -40,7 +37,7 @@ class Item extends Component
         $this->diskon = 0;
         $this->harga_jual_awal = 0;
         $this->hitungHargaJualAkhir();
-        $this->generateKodeMember();
+        $this->generateKodeItem();
 
         $firstCategory = Category::first();
         if ($firstCategory) {
@@ -49,7 +46,7 @@ class Item extends Component
     }
 
 
-    public function generateKodeMember()
+    public function generateKodeItem()
     {
         $length = 12;
         $min = pow(12, ($length - 1));
@@ -156,22 +153,13 @@ class Item extends Component
 
     public function deleteConfirmation($id)
     {
-        if (!empty($id)) {
-            $this->item_id = $id;
-        }
+        $this->item_id = $id;
     }
 
     public function delete()
     {
-        if (!empty($this->item_id)) {
-            $id = $this->item_id;
-            ModelsItem::find($id)->delete();
-        }
-        if (!empty($this->selectedItemId)) {
-            for ($i = 0; $i < count($this->selectedItemId); $i++) {
-                ModelsItem::find($this->selectedItemId[$i])->delete();
-            }
-        }
+        $id = $this->item_id;
+        ModelsItem::find($id)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
         return $this->redirect('/items', navigate: true);
     }
@@ -193,15 +181,6 @@ class Item extends Component
     {
         $this->sortColumn = $columnName;
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    }
-
-    public function toggleSelectAll()
-    {
-        if ($this->selectAll) {
-            $this->selectedItemId = ModelsItem::pluck('id')->toArray();
-        } else {
-            $this->selectedItemId = [];
-        }
     }
 
     public function render()

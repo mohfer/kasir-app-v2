@@ -4,24 +4,13 @@
 
             {{-- Alert --}}
             @if (session()->has('status'))
-                <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     {{ Session::get('status') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             <div class="row">
-                <div class="col">
-
-                    {{-- Trigger Bulking Delete --}}
-                    <div class="text-start mb-3">
-                        @if ($selectedCategoryId)
-                            <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#modalDelete"
-                                wire:click="deleteConfirmation('')">Delete
-                                {{ count($selectedCategoryId) }} Data</button>
-                        @endif
-                    </div>
-                </div>
                 <div class="col">
 
                     {{-- Trigger Modal Tambah --}}
@@ -54,10 +43,6 @@
                         <table class="table table-striped table-bordered mt-3">
                             <thead class="table-primary">
                                 <tr>
-                                    <th scope="col" class="text-center">
-                                        <input type="checkbox" class="form-check-input" wire:model="selectAll"
-                                            wire:click="toggleSelectAll">
-                                    </th>
                                     <th scope="col">No</th>
                                     <th scope="col" wire:click="sort('nama_kategori')">Kategori
                                         <span class="float-end" style="cursor: pointer;">
@@ -73,9 +58,6 @@
                             <tbody>
                                 @foreach ($categories as $key => $category)
                                     <tr>
-                                        <td class="text-center"><input type="checkbox" class="form-check-input"
-                                                value="{{ $category->id }}" wire:model.live='selectedCategoryId'
-                                                wire:key='{{ $category->id }}'></td>
                                         <td>{{ $categories->firstItem() + $key }}</td>
                                         <td>{{ $category->nama_kategori }}</td>
                                         <td class="text-center"><button class="btn btn-warning" data-bs-toggle="modal"

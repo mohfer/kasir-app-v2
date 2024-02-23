@@ -19,8 +19,6 @@ class Kategori extends Component
     public $title = 'Kategori';
     public $category_id;
     public $searchKey;
-    public $selectedCategoryId = [];
-    public $selectAll = false;
     public $sortColumn = 'nama_kategori';
     public $sortDirection = 'asc';
     public $countCategories;
@@ -70,36 +68,14 @@ class Kategori extends Component
 
     public function deleteConfirmation($id)
     {
-        if (!empty($id)) {
-            $this->category_id = $id;
-        }
+        $this->category_id = $id;
     }
 
     public function delete()
     {
-        // Hapus kategori berdasarkan category_id
-        if (!empty($this->category_id)) {
-            $categoryId = $this->category_id;
-
-            // Perbarui category_id menjadi NULL untuk item yang terkait dengan kategori yang akan dihapus
-            Item::where('category_id', $categoryId)->update(['category_id' => null]);
-
-            // Hapus kategori
-            Category::find($categoryId)->delete();
-        }
-
-        // Hapus beberapa kategori yang dipilih berdasarkan selectedCategoryId
-        if (!empty($this->selectedCategoryId)) {
-            foreach ($this->selectedCategoryId as $categoryId) {
-                // Perbarui category_id menjadi NULL untuk item yang terkait dengan kategori yang akan dihapus
-                Item::where('category_id', $categoryId)->update(['category_id' => null]);
-
-                // Hapus kategori
-                Category::find($categoryId)->delete();
-            }
-        }
-
-        // Setelah penghapusan, beri pesan sukses dan arahkan kembali ke halaman kategori
+        $categoryId = $this->category_id;
+        Item::where('category_id', $categoryId)->update(['category_id' => null]);
+        Category::find($categoryId)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
         return redirect('/kategori');
     }
@@ -113,7 +89,6 @@ class Kategori extends Component
     public function clear()
     {
         $this->nama_kategori = '';
-        $this->selectedCategoryId = [];
         $this->resetErrorBag();
     }
 
@@ -121,15 +96,6 @@ class Kategori extends Component
     {
         $this->sortColumn = $columnName;
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    }
-
-    public function toggleSelectAll()
-    {
-        if ($this->selectAll) {
-            $this->selectedCategoryId = Category::pluck('id')->toArray();
-        } else {
-            $this->selectedCategoryId = [];
-        }
     }
 
     public function render()

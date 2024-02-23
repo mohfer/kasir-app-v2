@@ -13,57 +13,119 @@
                         href="{{ url('dashboard') }}" wire:navigate>Dashboard</a>
 
                     {{-- Master Data --}}
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'items', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
-                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Master Data
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item {{ Route::is('kategori') ? 'active' : '' }}"
-                                    href="{{ url('kategori') }}" wire:navigate>Kategori</a></li>
-                            <li><a class="dropdown-item {{ Route::is('items') ? 'active' : '' }}"
-                                    href="{{ url('items') }}" wire:navigate>Barang</a></li>
-                            <li><a class="dropdown-item {{ Route::is('suppliers') ? 'active' : '' }}"
-                                    href="{{ url('suppliers') }}" wire:navigate>Supplier</a></li>
-                            <li><a class="dropdown-item {{ Route::is('users') ? 'active' : '' }}"
-                                    href="{{ url('users') }}" wire:navigate>User</a></li>
-                            <li><a class="dropdown-item {{ Route::is('membership') ? 'active' : '' }}"
-                                    href="{{ url('membership') }}" wire:navigate>Membership</a></li>
-                        </ul>
-                    </div>
+                    @can('isAdmin')
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'items', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Master Data
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item {{ Route::is('kategori') ? 'active' : '' }}"
+                                        href="{{ url('kategori') }}" wire:navigate>Kategori</a></li>
+                                <li><a class="dropdown-item {{ Route::is('items') ? 'active' : '' }}"
+                                        href="{{ url('items') }}" wire:navigate>Barang</a></li>
+                                <li><a class="dropdown-item {{ Route::is('suppliers') ? 'active' : '' }}"
+                                        href="{{ url('suppliers') }}" wire:navigate>Supplier</a></li>
+                                <li><a class="dropdown-item {{ Route::is('users') ? 'active' : '' }}"
+                                        href="{{ url('users') }}" wire:navigate>User</a></li>
+                                <li><a class="dropdown-item {{ Route::is('membership') ? 'active' : '' }}"
+                                        href="{{ url('membership') }}" wire:navigate>Membership</a></li>
+                            </ul>
+                        </div>
+                    @endcan
+
+                    @can('isGudang')
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'items', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Master Data
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item {{ Route::is('kategori') ? 'active' : '' }}"
+                                        href="{{ url('kategori') }}" wire:navigate>Kategori</a></li>
+                                <li><a class="dropdown-item {{ Route::is('items') ? 'active' : '' }}"
+                                        href="{{ url('items') }}" wire:navigate>Barang</a></li>
+                                <li><a class="dropdown-item {{ Route::is('suppliers') ? 'active' : '' }}"
+                                        href="{{ url('suppliers') }}" wire:navigate>Supplier</a></li>
+                            </ul>
+                        </div>
+                    @endcan
+
+                    @can('isKasir')
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle {{ Route::is('kategori', 'items', 'suppliers', 'users', 'membership') ? 'active' : '' }}"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Master Data
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item {{ Route::is('membership') ? 'active' : '' }}"
+                                        href="{{ url('membership') }}" wire:navigate>Membership</a></li>
+                            </ul>
+                        </div>
+                    @endcan
+
 
                     {{-- Stok --}}
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-primary dropdown-toggle {{ Route::is('stok-gudang', 'stok-etalase', 'riwayat-stok') ? 'active' : '' }}"
-                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Stok
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item {{ Route::is('stok-gudang') ? 'active' : '' }}"
-                                    href="{{ url('stok-gudang') }}" wire:navigate>Stok Gudang</a></li>
-                            <li><a class="dropdown-item {{ Route::is('stok-etalase') ? 'active' : '' }}"
-                                    href="{{ url('stok-etalase') }}" wire:navigate>Stok Etalase</a></li>
-                            <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
-                                    href="{{ url('riwayat-stok') }}" wire:navigate>Riwayat Stok</a></li>
-                        </ul>
-                    </div>
+                    @can('isAdmin')
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle {{ Route::is('stok-gudang', 'stok-etalase', 'riwayat-stok') ? 'active' : '' }}"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Stok
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item {{ Route::is('stok-gudang') ? 'active' : '' }}"
+                                        href="{{ url('stok-gudang') }}" wire:navigate>Stok Gudang</a></li>
+                                <li><a class="dropdown-item {{ Route::is('stok-etalase') ? 'active' : '' }}"
+                                        href="{{ url('stok-etalase') }}" wire:navigate>Stok Etalase</a></li>
+                                <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
+                                        href="{{ url('riwayat-stok') }}" wire:navigate>Riwayat Stok</a></li>
+                            </ul>
+                        </div>
+                    @endcan
+
+                    @can('isGudang')
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-primary dropdown-toggle {{ Route::is('stok-gudang', 'stok-etalase', 'riwayat-stok') ? 'active' : '' }}"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Stok
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item {{ Route::is('stok-gudang') ? 'active' : '' }}"
+                                        href="{{ url('stok-gudang') }}" wire:navigate>Stok Gudang</a></li>
+                                <li><a class="dropdown-item {{ Route::is('stok-etalase') ? 'active' : '' }}"
+                                        href="{{ url('stok-etalase') }}" wire:navigate>Stok Etalase</a></li>
+                                <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
+                                        href="{{ url('riwayat-stok') }}" wire:navigate>Riwayat Stok</a></li>
+                            </ul>
+                        </div>
+                    @endcan
 
                     {{-- Transaksi --}}
-                    <a class="btn btn-primary text-start {{ Route::is('transaction') ? 'active' : '' }}"
-                        href="{{ url('transaction') }}" wire:navigate>Transaksi</a>
+                    @can('isAdmin')
+                        <a class="btn btn-primary text-start {{ Route::is('transaction') ? 'active' : '' }}"
+                            href="{{ url('transaction') }}" wire:navigate>Transaksi</a>
+                    @endcan
+
+                    @can('isKasir')
+                        <a class="btn btn-primary text-start {{ Route::is('transaction') ? 'active' : '' }}"
+                            href="{{ url('transaction') }}" wire:navigate>Transaksi</a>
+                    @endcan
 
                     {{-- Laporan --}}
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Laporan
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Laporan</a></li>
-                        </ul>
-                    </div>
+                    @can('isAdmin')
+                        <a class="btn btn-primary text-start {{ Route::is('laporan') ? 'active' : '' }}"
+                            href="{{ url('laporan') }}" wire:navigate>Laporan</a>
+                    @endcan
+
+                    @can('isKasir')
+                        <a class="btn btn-primary text-start {{ Route::is('laporan') ? 'active' : '' }}"
+                            href="{{ url('laporan') }}" wire:navigate>Laporan</a>
+                    @endcan
                 </div>
                 <div class="navbar-nav ms-auto">
 
@@ -71,7 +133,7 @@
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle {{ Route::is('profile') ? 'active' : '' }}"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Profile
+                            {{ $nama }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"

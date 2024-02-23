@@ -26,8 +26,6 @@ class Supplier extends Component
 
     public $title = 'Suppliers';
     public $supplier_id;
-    public $selectedSupplierId = [];
-    public $selectAll = false;
     public $searchKey;
     public $countSuppliers;
     public $sortColumn = 'nama';
@@ -97,22 +95,13 @@ class Supplier extends Component
 
     public function deleteConfirmation($id)
     {
-        if (!empty($id)) {
-            $this->supplier_id = $id;
-        }
+        $this->supplier_id = $id;
     }
 
     public function delete()
     {
-        if (!empty($this->supplier_id)) {
-            $id = $this->supplier_id;
-            ModelsSupplier::find($id)->delete();
-        }
-        if (!empty($this->selectedSupplierId)) {
-            for ($i = 0; $i < count($this->selectedSupplierId); $i++) {
-                ModelsSupplier::find($this->selectedSupplierId[$i])->delete();
-            }
-        }
+        $id = $this->supplier_id;
+        ModelsSupplier::find($id)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
         return $this->redirect('/suppliers', navigate: true);
     }
@@ -135,15 +124,6 @@ class Supplier extends Component
     {
         $this->sortColumn = $columnName;
         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    }
-
-    public function toggleSelectAll()
-    {
-        if ($this->selectAll) {
-            $this->selectedSupplierId = ModelsSupplier::pluck('id')->toArray();
-        } else {
-            $this->selectedSupplierId = [];
-        }
     }
 
     public function render()

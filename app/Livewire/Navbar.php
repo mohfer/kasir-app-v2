@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Navbar extends Component
 {
+    public $nama;
+
+    public function mount()
+    {
+        $this->nama = Auth::user()->nama;
+    }
 
     public function logout()
     {

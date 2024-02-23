@@ -4,24 +4,13 @@
 
             {{-- Alert --}}
             @if (session()->has('status'))
-                <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                     {{ Session::get('status') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
 
             <div class="row">
-                <div class="col">
-
-                    {{-- Trigger Bulking Delete --}}
-                    <div class="text-start mb-3">
-                        @if ($selectedSupplierId)
-                            <button class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#modalDelete"
-                                wire:click="deleteConfirmation('')">Delete
-                                {{ count($selectedSupplierId) }} Data</button>
-                        @endif
-                    </div>
-                </div>
                 <div class="col">
 
                     {{-- Trigger Modal Tambah --}}
@@ -55,10 +44,6 @@
                             <table class="table table-striped table-bordered mt-3">
                                 <thead class="table-primary">
                                     <tr>
-                                        <th scope="col" class="text-center">
-                                            <input type="checkbox" class="form-check-input" wire:model="selectAll"
-                                                wire:click="toggleSelectAll">
-                                        </th>
                                         <th scope="col">No</th>
                                         <th scope="col" wire:click="sort('nama')">Nama
                                             <span class="float-end" style="cursor: pointer;">
@@ -88,9 +73,6 @@
                                 <tbody>
                                     @foreach ($suppliers as $key => $supplier)
                                         <tr>
-                                            <td class="text-center"><input type="checkbox" class="form-check-input"
-                                                    value="{{ $supplier->id }}" wire:model.live='selectedSupplierId'
-                                                    wire:key='{{ $supplier->id }}'></td>
                                             <td>{{ $suppliers->firstItem() + $key }}</td>
                                             <td>{{ $supplier->nama }}</td>
                                             <td>{{ $supplier->email }}</td>
