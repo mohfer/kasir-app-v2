@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\Transaction;
 use Livewire\WithPagination;
 use Livewire\Attributes\Validate;
 use App\Models\User as ModelsUser;
@@ -99,10 +100,18 @@ class User extends Component
     public function delete()
     {
         $id = $this->user_id;
-        ModelsUser::find($id)->delete();
-        session()->flash('status', 'Data Berhasil Dihapus!');
+        $userHasTransactions = Transaction::where('user_id', $id)->exists();
+
+        if ($userHasTransactions) {
+            session()->flash('error', 'Data tidak dapat dihapus karena masih dibutuhkan di halaman laporan.');
+        } else {
+            ModelsUser::find($id)->delete();
+            session()->flash('status', 'Data Berhasil Dihapus!');
+        }
+
         return $this->redirect('/users', navigate: true);
     }
+
 
     public function updatingSearchKey()
     {

@@ -8,6 +8,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if (session()->has('status'))
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        {{ Session::get('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="border shadow-lg p-4 rounded">
                     <h1 class="text-center">Login</h1>
                     <form wire:submit.prevent='login'>

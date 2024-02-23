@@ -32,68 +32,53 @@
                                     <h4 class="fw-bold">Data</h4>
                                 </div>
                                 <div class="col text-end">
-                                    <a class="btn btn-primary text-start" href="{{ url('password') }}"
-                                        wire:navigate>Password</a>
+                                    <a class="btn btn-primary text-start" href="{{ url('profile') }}"
+                                        wire:navigate>Profile</a>
                                 </div>
                             </div>
                         </div>
                         <div class="container my-3">
                             <form wire:submit.prevent='save'>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Username</label>
-                                    <input type="username" class="form-control @error('username') is-invalid @enderror"
-                                        wire:model.live='username' disabled>
-                                    @error('username')
+                                    <label for="" class="form-label">Old Password</label>
+                                    <input type="{{ $showPassword ? 'text' : 'password' }}"
+                                        class="form-control @error('oldPassword') is-invalid @enderror"
+                                        wire:model.live='oldPassword'>
+                                    @error('oldPassword')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">New Password</label>
+                                    <input type="{{ $showPassword ? 'text' : 'password' }}"
+                                        class="form-control @error('newPassword') is-invalid @enderror"
+                                        wire:model.live='newPassword'>
+                                    @error('newPassword')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Jenis Kelamin</label>
-                                    <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="l" value="L" wire:model="jenis_kelamin" required>
-                                        <label class="form-check-label" for="l">Laki - Laki</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="p" value="P" wire:model="jenis_kelamin" required>
-                                        <label class="form-check-label" for="p">Perempuan</label>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        wire:model.live='email'>
-                                    @error('email')
+                                    <label for="" class="form-label">Confirm Password</label>
+                                    <input type="{{ $showPassword ? 'text' : 'password' }}"
+                                        class="form-control @error('confirmPassword') is-invalid @enderror"
+                                        wire:model.live='confirmPassword'>
+                                    @error('confirmPassword')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Telp</label>
-                                    <input type="number" class="form-control @error('telp') is-invalid @enderror"
-                                        wire:model.live='telp'
-                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    @error('telp')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Foto</label>
-                                    <input type="file" class="form-control @error('foto') is-invalid @enderror"
-                                        wire:model.live='foto'
-                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    @error('foto')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="togglePasswordVisibility">
+                                    <label class="form-check-label" for="togglePasswordVisibility"
+                                        wire:click='togglePasswordVisibility'>
+                                        Show Password
+                                    </label>
                                 </div>
                                 <div class="mt-3 text-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>

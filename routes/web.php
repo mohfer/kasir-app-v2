@@ -5,6 +5,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Item;
 use App\Livewire\Kategori;
 use App\Livewire\Membership;
+use App\Livewire\Password;
 use App\Livewire\Profile;
 use App\Livewire\Report;
 use App\Livewire\StokEtalase;
@@ -45,4 +46,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction', Transaction::class)->name('transaction')->middleware('checkrole:Admin,Kasir');
     Route::get('/report', Report::class)->name('report')->middleware('checkrole:Admin,Kasir');
     Route::get('/profile', Profile::class)->name('profile');
+    Route::get('/password', Password::class)->name('password');
 });
