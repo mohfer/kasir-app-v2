@@ -138,7 +138,7 @@
                                     <div class="col text-end">
                                         <span>
                                             <input type="text" class="form-control-plaintext fw-bold text-end"
-                                                wire:model.live="kembalian" disabled>
+                                                disabled value="{{ number_format($kembalian) }}">
                                         </span><br>
                                     </div>
                                 </div>
