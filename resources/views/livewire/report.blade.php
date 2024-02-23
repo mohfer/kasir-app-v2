@@ -3,29 +3,27 @@
         <div class="container">
 
             <div class="row gap-3 mt-3 justify-content-center">
-                <div class="col-md-5 border shadow bg-danger text-light rounded p-3">
+                <div class="col-md-3 border shadow bg-danger text-light rounded p-3">
                     <div class="row">
                         <div class="col">
                             <h5>Barang Terjual</h5>
                         </div>
                         <div class="col">
-                            <h1 class="text-center">{{ $totalBarangTerjual }}</h1>
+                            <h1 class="text-center">{{ number_format($totalBarangTerjual) }}</h1>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 border shadow bg-warning text-light rounded p-3">
+                <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
                     <div class="row">
                         <div class="col">
                             <h5>Total Pendapatan</h5>
                         </div>
                         <div class="col">
-                            <h1 class="text-center">{{ $totalPendapatan }}</h1>
+                            <h1 class="text-center">{{ number_format($totalPendapatan) }}</h1>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row gap-3 mt-3 justify-content-center">
-                <div class="col-md-5 border shadow bg-success text-light rounded p-3">
+                <div class="col-md-3 border shadow bg-success text-light rounded p-3">
                     <div class="row">
                         <div class="col">
                             <h5>Total Transaksi</h5>
@@ -33,25 +31,6 @@
                         <div class="col">
                             <h1 class="text-center">{{ $totalTransaksi }}</h1>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-5 border shadow bg-primary text-light rounded p-3">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Top Selling Item</h5>
-                        </div>
-                        <div class="col">
-                            @if (count($topSellingItems) > 0)
-                                <h1 class="text-center">
-                                    {{ $topSellingItems[0]['item_name'] }}
-                                </h1>
-                            @else
-                                <h1 class="text-center">
-                                    0
-                                </h1>
-                            @endif
-                        </div>
-
                     </div>
                 </div>
             </div>

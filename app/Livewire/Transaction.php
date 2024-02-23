@@ -154,6 +154,15 @@ class Transaction extends Component
 
     public function bayar()
     {
+
+        $this->validate([
+            'totalBayar' => 'required|numeric|min:' . $this->totalSetelahDiskon
+        ], [
+            'totalBayar.required' => 'Total bayar harus diisi.',
+            'totalBayar.min' => 'Total bayar harus lebih besar dari total harga.'
+        ]);
+
+
         DB::transaction(function () {
             ModelsTransaction::create([
                 'kode_transaksi' => $this->kode_transaksi,

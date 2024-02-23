@@ -19,41 +19,22 @@ class Report extends Component
     public $totalBarangTerjual;
     public $totalPendapatan;
     public $totalTransaksi;
-    public $topSellingItems;
 
     public function filter()
     {
-        $this->totalBarangTerjual = TransactionDetail::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])
-            ->sum('qty');
-
-        $this->totalPendapatan = Transaction::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])
-            ->sum('total');
-
-        $this->totalTransaksi = Transaction::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])
-            ->count();
-
-        $topSellingItems = TransactionDetail::select('item_id', DB::raw('SUM(qty) as total_qty'))
-            ->whereBetween('tanggal', [$this->dateStart, $this->dateEnd]) // Sesuaikan dengan tanggal yang Anda inginkan
-            ->groupBy('item_id')
-            ->orderByDesc('total_qty')
-            ->limit(5)
-            ->get();
-
-        $topSellingItemsWithData = [];
-        foreach ($topSellingItems as $topSellingItem) {
-            $item = Item::find($topSellingItem->item_id);
-            if ($item) {
-                $topSellingItemsWithData[] = [
-                    'item_name' => $item->nama_barang,
-                    'total_qty' => $topSellingItem->total_qty
-                ];
-            }
+        if ($this->dateStart && $this->dateEnd) {
+            $this->totalBarangTerjual = TransactionDetail::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])->sum('qty');
+            $this->totalPendapatan = Transaction::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])->sum('total');
+            $this->totalTransaksi = Transaction::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])->count();
+            $this->transactions = Transaction::whereBetween('tanggal', [$this->dateStart, $this->dateEnd])->orderBy('created_at', 'desc')->get();
+        } else {
+            $this->totalBarangTerjual = TransactionDetail::sum('qty');
+            $this->totalPendapatan = Transaction::sum('total');
+            $this->totalTransaksi = Transaction::count();
+            $this->transactions = Transaction::orderBy('created_at', 'desc')->get();
         }
-        $this->topSellingItems = $topSellingItemsWithData;
-
-
-        $this->transactions = Transaction::orderBy('created_at', 'desc')->get();
     }
+
 
     public function render()
     {

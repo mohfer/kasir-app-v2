@@ -160,8 +160,17 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label class="form-label">Bayar</label>
-                                    <input type="number" class="form-control" wire:model.live="totalBayar">
+                                    <label for="" class="form-label">Bayar</label>
+                                    <input type="number" class="form-control @error('totalBayar') is-invalid @enderror"
+                                        wire:model.lazy='totalBayar'
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" @if (count($cartItems) == 0)
+                                    disabled
+                                    @endif>
+                                    @error('totalBayar')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                             <button class="btn btn-primary w-100 mt-3" wire:click="bayar">Bayar</button>
