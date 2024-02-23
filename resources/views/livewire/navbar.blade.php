@@ -118,13 +118,13 @@
 
                     {{-- Laporan --}}
                     @can('isAdmin')
-                        <a class="btn btn-primary text-start {{ Route::is('laporan') ? 'active' : '' }}"
-                            href="{{ url('laporan') }}" wire:navigate>Laporan</a>
+                        <a class="btn btn-primary text-start {{ Route::is('report') ? 'active' : '' }}"
+                            href="{{ url('report') }}" wire:navigate>Laporan</a>
                     @endcan
 
                     @can('isKasir')
-                        <a class="btn btn-primary text-start {{ Route::is('laporan') ? 'active' : '' }}"
-                            href="{{ url('laporan') }}" wire:navigate>Laporan</a>
+                        <a class="btn btn-primary text-start {{ Route::is('report') ? 'active' : '' }}"
+                            href="{{ url('report') }}" wire:navigate>Laporan</a>
                     @endcan
                 </div>
                 <div class="navbar-nav ms-auto">
@@ -136,7 +136,7 @@
                             {{ $nama }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item {{ Route::is('riwayat-stok') ? 'active' : '' }}"
+                            <li><a class="dropdown-item {{ Route::is('profile') ? 'active' : '' }}"
                                     href="{{ url('profile') }}" wire:navigate>Profile</a></li>
                             <hr>
                             <li><button class="dropdown-item" wire:click='logout'>Logout</button></li>

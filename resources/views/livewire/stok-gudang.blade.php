@@ -123,7 +123,7 @@
                                         Faktur</label>
                                     <input type="number" class="form-control @error('no_faktur') is-invalid @enderror"
                                         wire:model.live='no_faktur'
-                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" disabled>
                                     @error('no_faktur')
                                         <div class="invalid-feedback">
                                             {{ $message }}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class Profile extends Component
 {
 
+    public $title = 'Profile';
     public $role;
     public $nama;
     public $username;
@@ -28,6 +29,7 @@ class Profile extends Component
 
     public function render()
     {
+        view()->share('title', $this->title);
         return view('livewire.profile');
     }
 }

@@ -17,4 +17,9 @@ class Supplier extends Model
         'alamat',
         'telp'
     ];
+
+    public function stock_history(): HasMany
+    {
+        return $this->hasMany(StokHistory::class);
+    }
 }

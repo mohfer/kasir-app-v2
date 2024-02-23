@@ -42,7 +42,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card mt-3">
                     <div class="card-header">
                         <div class="row">
@@ -52,36 +51,39 @@
                         </div>
                     </div>
                     <div class="container">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered mt-3">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Kode Transakasi</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Bayar</th>
-                                        <th scope="col">Kembalian</th>
-                                        <th scope="col">Tanggal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($transactionHistories as $key => $transactionHistory)
+                        @if ($transactionHistories->isEmpty())
+                            <p class="text-center mt-3">No Data</p>
+                        @else
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered mt-3">
+                                    <thead class="table-primary">
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $transactionHistory->kode_transaksi }}</td>
-                                            <td>{{ number_format($transactionHistory->total) }}</td>
-                                            <td>{{ number_format($transactionHistory->bayar) }}</td>
-                                            <td>{{ number_format($transactionHistory->kembalian) }}</td>
-                                            <td>{{ $transactionHistory->created_at }}</td>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Kode Transakasi</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Bayar</th>
+                                            <th scope="col">Kembalian</th>
+                                            <th scope="col">Tanggal</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transactionHistories as $key => $transactionHistory)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $transactionHistory->kode_transaksi }}</td>
+                                                <td>{{ number_format($transactionHistory->total) }}</td>
+                                                <td>{{ number_format($transactionHistory->bayar) }}</td>
+                                                <td>{{ number_format($transactionHistory->kembalian) }}</td>
+                                                <td>{{ $transactionHistory->created_at }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
                     </div>
                 </div>
-
-            @endcan
-        </div>
+            </div>
+        @endcan
     </div>
 </div>

@@ -17,6 +17,7 @@ class Transaction extends Component
     #[Validate('required|numeric|min:1')]
     public $qty;
 
+    public $title = 'Transaction';
     public $searchKey;
     public $cartItems = [];
     public $cartItemsData = [];
@@ -162,6 +163,7 @@ class Transaction extends Component
                 'total' => $this->totalSetelahDiskon,
                 'bayar' => $this->totalBayar,
                 'kembalian' => $this->kembalian,
+                'tanggal' => now()->toDateString(),
             ]);
 
             foreach ($this->cartItemsData as $item) {
@@ -177,7 +179,8 @@ class Transaction extends Component
                     'transaction_id' => ModelsTransaction::latest()->first()->id,
                     'item_id' => $item['id'],
                     'qty' => $this->qty[$item['id']],
-                    'subtotal' => $this->subtotal
+                    'subtotal' => $this->subtotal,
+                    'tanggal' => now()->toDateString(),
                 ]);
             }
         });
@@ -199,7 +202,7 @@ class Transaction extends Component
         $items = $items->get();
 
         $memberships = Membership::where('aktif', 'Ya')->get();
-
+        view()->share('title', $this->title);
         return view('livewire.transaction', [
             'items' => $items,
             'cartItemsData' => $this->cartItemsData,

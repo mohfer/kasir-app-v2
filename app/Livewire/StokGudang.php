@@ -35,6 +35,7 @@ class StokGudang extends Component
         $this->bayar = 0;
         $this->harga = 0;
         $this->kembali = 0;
+        $this->generateNoFaktur();
 
         $firstItem = Item::first();
         if ($firstItem) {
@@ -45,6 +46,15 @@ class StokGudang extends Component
         if ($firstSupplier) {
             $this->selectedSupplierId = $firstSupplier->id;
         }
+    }
+
+    public function generateNoFaktur()
+    {
+        $length = 15;
+        $min = pow(15, ($length - 1));
+        $max = pow(15, $length) - 1;
+        $randomNumbers = mt_rand($min, $max);
+        $this->no_faktur = $randomNumbers;
     }
 
     public function updatedSelectedItemId($value)
@@ -109,7 +119,8 @@ class StokGudang extends Component
                     'harga' => $this->harga,
                     'bayar' => $this->bayar,
                     'kembali' => $this->kembali,
-                    'keterangan' => 'Gudang',
+                    'keterangan' => 'Ditambahkan Ke Gudang',
+                    'tanggal' => now()->toDateString(),
                 ]);
                 $item = Item::find($this->selectedItemId);
                 if ($item) {
@@ -139,6 +150,7 @@ class StokGudang extends Component
         $this->bayar = 0;
         $this->kembali = 0;
         $this->resetErrorBag();
+        return $this->redirect('/stok-gudang', navigate: true);
     }
 
     public function render()

@@ -137,8 +137,8 @@
                                     </div>
                                     <div class="col text-end">
                                         <span>
-                                            <input type="text" class="form-control" wire:model.live="kembalian"
-                                                disabled>
+                                            <input type="text" class="form-control-plaintext fw-bold text-end"
+                                                wire:model.live="kembalian" disabled>
                                         </span><br>
                                     </div>
                                 </div>

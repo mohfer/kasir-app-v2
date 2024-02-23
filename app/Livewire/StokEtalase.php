@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use App\Models\Stock;
 use Livewire\Component;
+use App\Models\StokHistory;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\DB;
 
 class StokEtalase extends Component
 {
@@ -50,27 +52,39 @@ class StokEtalase extends Component
     {
         $this->validate();
 
-        $stockInWarehouse = Stock::find($this->selectedStockId);
+        DB::transaction(function () {
+            $stockInWarehouse = Stock::find($this->selectedStockId);
+            if ($this->jumlah_item_etalase == 0) {
+                session()->flash('status', 'Tidak ada yang dipindahkan.');
+                return $this->redirect('/stok-etalase', navigate: true);
+            }
 
-        if ($this->jumlah_item_etalase == 0) {
-            session()->flash('status', 'Tidak ada yang dipindahkan.');
+            if ($stockInWarehouse && $this->jumlah_item_etalase > $stockInWarehouse->stok_gudang) {
+                $this->addError('jumlah_item_etalase', 'Jumlah item di etalase tidak boleh melebihi stok di gudang');
+                return;
+            }
+
+            $stock = Stock::find($this->selectedStockId);
+            $newEtalaseStock = $stock->stok_etalase + $this->jumlah_item_etalase;
+            $stock->stok_gudang -= $this->jumlah_item_etalase;
+            $stock->stok_etalase = $newEtalaseStock;
+            $stock->save();
+
+            StokHistory::create([
+                'no_faktur' => null,
+                'item_id' => $this->selectedStockId,
+                'supplier_id' => null,
+                'jumlah' => $this->jumlah_item_etalase,
+                'harga' => null,
+                'bayar' => null,
+                'kembali' => null,
+                'keterangan' => 'Dipindahkan Ke Etalase',
+                'tanggal' => now()->toDateString(),
+            ]);
+            session()->flash('status', 'Data Berhasil Ditambah!');
             return $this->redirect('/stok-etalase', navigate: true);
-        }
-
-        if ($stockInWarehouse && $this->jumlah_item_etalase > $stockInWarehouse->stok_gudang) {
-            $this->addError('jumlah_item_etalase', 'Jumlah item di etalase tidak boleh melebihi stok di gudang');
-            return;
-        }
-
-        $stock = Stock::find($this->selectedStockId);
-        $newEtalaseStock = $stock->stok_etalase + $this->jumlah_item_etalase;
-        $stock->stok_gudang -= $this->jumlah_item_etalase;
-        $stock->stok_etalase = $newEtalaseStock;
-        $stock->save();
-
-        session()->flash('status', 'Data Berhasil Ditambah!');
-        return $this->redirect('/stok-etalase', navigate: true);
-        $this->clear();
+            $this->clear();
+        });
     }
 
 

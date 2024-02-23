@@ -27,4 +27,9 @@ class StokHistory extends Model
     {
         return $this->belongsTo(Item::class, 'item_id');
     }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 }

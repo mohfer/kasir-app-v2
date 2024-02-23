@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('stok_histories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('no_faktur')->unique();
-            $table->foreignId('item_id')->references('id')->on('items');
-            $table->foreignId('supplier_id')->references('id')->on('suppliers');
+            $table->bigInteger('no_faktur')->unique()->nullable();
+            $table->foreignId('item_id')->constrained('items');
+            $table->foreignId('supplier_id')->nullable()->constrained('suppliers');
             $table->integer('jumlah');
-            $table->bigInteger('harga');
-            $table->bigInteger('bayar');
-            $table->integer('kembali');
+            $table->bigInteger('harga')->nullable();
+            $table->bigInteger('bayar')->nullable();
+            $table->integer('kembali')->nullable();
             $table->string('keterangan');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

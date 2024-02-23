@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('diskon');
             $table->bigInteger('bayar');
             $table->bigInteger('kembalian');
+            $table->date('tanggal')->default(date(now()));
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('item_id')->references('id')->on('items');
             $table->integer('qty');
             $table->bigInteger('subtotal');
+            $table->date('tanggal')->default(date(now()));
             $table->timestamps();
         });
     }

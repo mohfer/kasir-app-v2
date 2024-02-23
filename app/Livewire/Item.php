@@ -64,9 +64,11 @@ class Item extends Component
 
     private function hitungHargaJualAkhir()
     {
-        $diskon_decimal = $this->diskon ? $this->diskon / 100 : 0;
-        $jumlah_diskon = $this->harga_jual_awal * $diskon_decimal;
-        $this->harga_jual_akhir = $this->harga_jual_awal - $jumlah_diskon;
+        if ($this->harga_jual_awal != '') {
+            $diskon_decimal = $this->diskon ? $this->diskon / 100 : 0;
+            $jumlah_diskon = $this->harga_jual_awal * $diskon_decimal;
+            $this->harga_jual_akhir = $this->harga_jual_awal - $jumlah_diskon;
+        }
     }
 
     public function save()
