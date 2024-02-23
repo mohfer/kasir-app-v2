@@ -119,12 +119,12 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <span class="fw-bold">{{ count($transactionHistories) }} History Stok Terakhir</span>
+                                <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
                             </div>
                         </div>
                     </div>
                     <div class="container">
-                        @if ($transactionHistories->isEmpty())
+                        @if ($stockHistories->isEmpty())
                             <p class="text-center mt-3">No Data</p>
                         @else
                             <div class="table-responsive">
@@ -202,12 +202,12 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <span class="fw-bold">{{ count($transactionHistories) }} History Stok Terakhir</span>
+                                <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
                             </div>
                         </div>
                     </div>
                     <div class="container">
-                        @if ($transactionHistories->isEmpty())
+                        @if ($stockHistories->isEmpty())
                             <p class="text-center mt-3">No Data</p>
                         @else
                             <div class="table-responsive">
