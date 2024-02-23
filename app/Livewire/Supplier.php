@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\StokHistory;
 use Livewire\Component;
 use App\Models\Supplier as ModelsSupplier;
 use Livewire\WithPagination;
@@ -101,8 +102,15 @@ class Supplier extends Component
     public function delete()
     {
         $id = $this->supplier_id;
-        ModelsSupplier::find($id)->delete();
-        session()->flash('status', 'Data Berhasil Dihapus!');
+        $supplierHasTransactions = StokHistory::where('supplier_id', $id)->exists();
+
+        if ($supplierHasTransactions) {
+            session()->flash('error', 'Data tidak dapat dihapus karena masih dibutuhkan di halaman riwayat stok.');
+        } else {
+            ModelsSupplier::find($id)->delete();
+            session()->flash('status', 'Data Berhasil Dihapus!');
+        }
+
         return $this->redirect('/suppliers', navigate: true);
     }
 
