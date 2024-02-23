@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Role</label>
-                                    <select class="form-select form-select" wire:model="selectedRole">
+                                    <select class="form-select form-select" wire:model.change="selectedRole">
                                         <option value="Admin">Admin</option>
                                         <option value="Gudang">Gudang</option>
                                         <option value="Kasir">Kasir</option>
