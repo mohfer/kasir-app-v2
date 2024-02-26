@@ -162,7 +162,7 @@
                                 <div class="col">
                                     <label for="" class="form-label">Bayar</label>
                                     <input type="number" class="form-control @error('totalBayar') is-invalid @enderror"
-                                        wire:model.lazy='totalBayar'
+                                        wire:model.live='totalBayar'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57" @if (count($cartItems) == 0)
                                     disabled
                                     @endif>

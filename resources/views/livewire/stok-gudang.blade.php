@@ -71,7 +71,7 @@
                                             <td>{{ $stock->stok_gudang }}</td>
                                             @if ($stock->stok_gudang <= 5)
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-warning"
+                                                    <button type="button" class="btn btn-primary"
                                                         data-bs-toggle="modal" data-bs-target="#modalTambah">
                                                         Tambah Stok
                                                     </button>

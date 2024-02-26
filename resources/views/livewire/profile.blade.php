@@ -15,8 +15,8 @@
                             Photo
                         </div>
                         <div class="text-center pt-3">
-                            <img src="https://source.unsplash.com/random/500x500" class="card-img-top w-50 rounded-pill"
-                                alt="Profile Picture">
+                            {{-- <img src="https://source.unsplash.com/random/500x500" class="card-img-top w-50 rounded-pill" --}}
+                            {{-- alt="Profile Picture"> --}}
                         </div>
                         <div class="card-body text-center">
                             <h3 class="fw-bold">{{ $role }}</h3>
@@ -86,10 +86,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Foto</label>
-                                    <input type="file" class="form-control @error('foto') is-invalid @enderror"
-                                        wire:model.live='foto'
-                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    @error('foto')
+                                    <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                        wire:model.change='photo'>
+                                    @error('photo')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

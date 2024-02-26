@@ -28,6 +28,7 @@ class Transaction extends Component
     public $kembalian;
     public $totalSetelahDiskon;
     public $kode_transaksi;
+    public $stockEtalase;
 
     public function mount()
     {
@@ -64,16 +65,14 @@ class Transaction extends Component
             return;
         }
 
-        $stockEtalase = $item->stock->stok_etalase ?? 0;
+        $this->stockEtalase = $item->stock->stok_etalase ?? 0;
 
         if (empty($qty) || $qty <= 0) {
             session()->flash('error', 'Quantity harus diisi dan harus lebih dari 0.');
-            return;
         }
 
-        if ($qty > $stockEtalase) {
+        if ($qty > $this->stockEtalase) {
             session()->flash('error', 'Quantity melebihi stok etalase.');
-            return;
         }
 
         $this->qty[$itemId] = $qty;
@@ -154,13 +153,26 @@ class Transaction extends Component
 
     public function bayar()
     {
+        if ($this->totalBayar < $this->totalSetelahDiskon) {
+            session()->flash('error', 'Total Bayar Kurang.');
+            return;
+        }
 
-        $this->validate([
-            'totalBayar' => 'required|numeric|min:' . $this->totalSetelahDiskon
-        ], [
-            'totalBayar.required' => 'Total bayar harus diisi.',
-            'totalBayar.min' => 'Total bayar harus lebih besar dari total harga.'
-        ]);
+        foreach ($this->qty as $qtyItem) {
+            if ($qtyItem > $this->stockEtalase) {
+                session()->flash('error', 'Ada barang yang melebihi stok etalase.');
+                return;
+            }
+        }
+
+
+        // $this->validate([
+        //     'totalBayar' => 'required|numeric|min:' . $this->totalSetelahDiskon,
+        //     'qty' => 'required|numeric|min:1|max:' . $this->stockEtalase
+        // ], [
+        //     'totalBayar.required' => 'Total bayar harus diisi.',
+        //     'totalBayar.min' => 'Total bayar harus lebih besar dari total harga.',
+        // ]);
 
 
         DB::transaction(function () {

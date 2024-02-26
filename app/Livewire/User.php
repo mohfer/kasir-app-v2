@@ -46,6 +46,7 @@ class User extends Component
             'password' => strtolower($this->nama),
             'jenis_kelamin' => '',
             'role' => $this->selectedRole,
+            'foto' => null,
         ]);
 
         session()->flash('status', 'Data Berhasil Ditambah!');

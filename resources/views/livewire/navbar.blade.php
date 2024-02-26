@@ -131,7 +131,8 @@
 
                     {{-- Profile --}}
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle {{ Route::is('profile') ? 'active' : '' }}"
+                        <button
+                            class="btn btn-primary dropdown-toggle {{ Route::is('profile', 'password') ? 'active' : '' }}"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ $nama }}
                         </button>

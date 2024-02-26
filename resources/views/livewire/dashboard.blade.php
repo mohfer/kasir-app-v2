@@ -12,75 +12,35 @@
             @can('isAdmin')
                 <div class="row gap-3 mt-3 justify-content-center">
                     <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Membership</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ $membership }}</h1>
-                            </div>
-                        </div>
+                        <h5>Membership</h5>
+                        <h1 class="text-center">{{ $membership }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-success text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Pendapatan Hari Ini</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">Rp. {{ $pendapatan }}</h1>
-                            </div>
-                        </div>
+                        <h5>Pendapatan Hari Ini</h5>
+                        <h1 class="text-center">Rp. {{ $pendapatan }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-primary text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Transaksi Hari Ini</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ $transaksi }}</h1>
-                            </div>
-                        </div>
+                        <h5>Transaksi Hari Ini</h5>
+                        <h1 class="text-center">{{ $transaksi }}</h1>
                     </div>
                 </div>
                 <div class="row gap-3 mt-3 justify-content-center">
                     <div class="col-md-3 border shadow bg-primary text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Barang</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($barang) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Barang</h5>
+                        <h1 class="text-center">{{ number_format($barang) }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-success text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Stok</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($stok) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Stok</h5>
+                        <h1 class="text-center">{{ number_format($stok) }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Supplier</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($supplier) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Supplier</h5>
+                        <h1 class="text-center">{{ number_format($supplier) }}</h1>
                     </div>
                 </div>
                 <div class="card mt-3">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <span class="fw-bold">{{ count($transactionHistories) }} Transaksi Terakhir</span>
-                            </div>
-                        </div>
+                        <span class="fw-bold">{{ count($transactionHistories) }} Transaksi Terakhir</span>
                     </div>
                     <div class="container">
                         @if ($transactionHistories->isEmpty())
@@ -117,11 +77,7 @@
                 </div>
                 <div class="card mt-3">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
-                            </div>
-                        </div>
+                        <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
                     </div>
                     <div class="container">
                         @if ($stockHistories->isEmpty())
@@ -168,43 +124,21 @@
             @can('isGudang')
                 <div class="row gap-3 mt-3 justify-content-center">
                     <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Barang</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($barang) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Barang</h5>
+                        <h1 class="text-center">{{ number_format($barang) }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-success text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Stok</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($stok) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Stok</h5>
+                        <h1 class="text-center">{{ number_format($stok) }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-primary text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Supplier</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ number_format($supplier) }}</h1>
-                            </div>
-                        </div>
+                        <h5>Supplier</h5>
+                        <h1 class="text-center">{{ number_format($supplier) }}</h1>
                     </div>
                 </div>
                 <div class="card mt-3">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
-                            </div>
-                        </div>
+                        <span class="fw-bold">{{ count($stockHistories) }} History Stok Terakhir</span>
                     </div>
                     <div class="container">
                         @if ($stockHistories->isEmpty())
@@ -251,43 +185,21 @@
             @can('isKasir')
                 <div class="row gap-3 mt-3 justify-content-center">
                     <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Membership</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ $membership }}</h1>
-                            </div>
-                        </div>
+                        <h5>Membership</h5>
+                        <h1 class="text-center">{{ $membership }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-success text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Pendapatan Hari Ini</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">Rp. {{ $pendapatan }}</h1>
-                            </div>
-                        </div>
+                        <h5>Pendapatan Hari Ini</h5>
+                        <h1 class="text-center">Rp. {{ $pendapatan }}</h1>
                     </div>
                     <div class="col-md-3 border shadow bg-primary text-light rounded p-3">
-                        <div class="row">
-                            <div class="col">
-                                <h5>Transaksi Hari Ini</h5>
-                            </div>
-                            <div class="col">
-                                <h1 class="text-center">{{ $transaksi }}</h1>
-                            </div>
-                        </div>
+                        <h5>Transaksi Hari Ini</h5>
+                        <h1 class="text-center">{{ $transaksi }}</h1>
                     </div>
                 </div>
                 <div class="card mt-3">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col">
-                                <span class="fw-bold">{{ count($transactionHistories) }} Transaksi Terakhir</span>
-                            </div>
-                        </div>
+                        <span class="fw-bold">{{ count($transactionHistories) }} Transaksi Terakhir</span>
                     </div>
                     <div class="container">
                         @if ($transactionHistories->isEmpty())

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'telp',
         'role',
+        'foto',
     ];
 
     public function transaction(): HasMany
