@@ -15,8 +15,9 @@
                             Photo
                         </div>
                         <div class="text-center pt-3">
-                            {{-- <img src="https://source.unsplash.com/random/500x500" class="card-img-top w-50 rounded-pill" --}}
-                            {{-- alt="Profile Picture"> --}}
+                            <img src="{{ $foto ? asset('storage/photos/' . $foto) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png' }}"
+                                class="card-img-top rounded-circle"
+                                style="width: 200px; height: 200px; object-fit: cover;" alt="Profile Picture">
                         </div>
                         <div class="card-body text-center">
                             <h3 class="fw-bold">{{ $role }}</h3>
@@ -86,7 +87,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Foto</label>
-                                    <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                    <input type="file" accept="image/*"
+                                        class="form-control @error('photo') is-invalid @enderror"
                                         wire:model.change='photo'>
                                     @error('photo')
                                         <div class="invalid-feedback">

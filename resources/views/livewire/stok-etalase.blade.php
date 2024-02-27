@@ -110,6 +110,13 @@
                                 wire:click='clear()'></button>
                         </div>
                         <div class="modal-body">
+                            @if ($errorMessage)
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ $errorMessage }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
                             <form wire:submit.prevent='save'>
                                 <div class="mb-3">
                                     <label class="form-label">Barang</label>

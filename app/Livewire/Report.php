@@ -2,16 +2,25 @@
 
 namespace App\Livewire;
 
-use App\Models\Item;
 use Livewire\Component;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
-use Illuminate\Support\Facades\DB;
 
 class Report extends Component
 {
 
     public $title = 'Report';
+    public $transaction;
+    public $waktu;
+    public $kode_transaksi;
+    public $kasir;
+    public $subtotal;
+    public $customer;
+    public $diskon;
+    public $total;
+    public $bayar;
+    public $kembalian;
+    public $transactionDetails;
     public $transactions;
     public $dateStart;
     public $dateEnd;
@@ -35,6 +44,31 @@ class Report extends Component
         }
     }
 
+    public function edit($id)
+    {
+        $this->transaction = Transaction::findOrFail($id);
+        $this->transactionDetails = TransactionDetail::where('transaction_id', $id)->get();
+        $this->waktu = $this->transaction->created_at;
+        $this->kode_transaksi = $this->transaction->kode_transaksi;
+        $this->kasir = $this->transaction->user->nama;
+        $this->customer = $this->transaction->membership->nama;
+        $this->diskon = $this->transaction->diskon;
+        $this->total = $this->transaction->total;
+        $this->bayar = $this->transaction->bayar;
+        $this->kembalian = $this->transaction->kembalian;
+    }
+
+    public function clear()
+    {
+        $this->kode_transaksi == '';
+        $this->kasir == '';
+        $this->customer == '';
+        $this->diskon == '';
+        $this->total == '';
+        $this->bayar == '';
+        $this->kembalian == '';
+    }
+
 
     public function render()
     {
@@ -49,7 +83,8 @@ class Report extends Component
             'transactions' => $this->transactions,
             'totalBarangTerjual' => $this->totalBarangTerjual,
             'totalPendapatan' => $this->totalPendapatan,
-            'totalTransaksi' => $this->totalTransaksi
+            'totalTransaksi' => $this->totalTransaksi,
+            'transactionDetails' => $this->transactionDetails,
         ]);
     }
 }

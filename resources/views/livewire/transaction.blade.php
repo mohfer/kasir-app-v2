@@ -14,7 +14,7 @@
                 </div>
             @endif
             <div class="row mt-3">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-5 mb-3">
                     <div class="card">
                         <div class="card-header fw-bold ">
                             List
@@ -24,7 +24,7 @@
                                 wire:model.live='searchKey'>
                             <div class="row mb-3">
                                 @if ($items->isEmpty())
-                                    <p class="text-center mt-3">No Data</p>
+                                    <p class="text-center mt-3">No Data / Stok Etalase Kosong</p>
                                 @else
                                     @foreach ($items as $item)
                                         <div class="col-md-6 mb-3">
@@ -39,8 +39,10 @@
                                                         {{ $item->diskon }}%
                                                     </div>
                                                 @endif
-                                                <img src="https://source.unsplash.com/random/500x500"
-                                                    class="card-img-top" alt="Item">
+                                                <img src="{{ $item->foto ? asset('storage/items/' . $item->foto) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png' }}"
+                                                    class="card-img-top"
+                                                    style="width: 200px; height: 200px; object-fit: cover;"
+                                                    alt="Profile Picture">
                                                 <div class="card-body text-center">
                                                     <h6 class="card-title">{{ $item->nama_barang }}</h6>
                                                     <h5 class="fw-bold">
@@ -52,12 +54,20 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                    <div class="row">
+                                        <div class="text-center mb-3">
+                                            Jumlah Data: <span class="fw-bold">{{ $countItems }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            {{ $items->links() }}
+                                        </div>
+                                    </div>
                                 @endif
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
@@ -74,7 +84,10 @@
                                         <th scope="col" class="text-center">Harga</th>
                                         <th scope="col" class="w-25 text-center">Qty</th>
                                         <th scope="col" class="w-25 text-center">Subtotal</th>
-                                        <th scope="col" class="text-center"><i class="bi bi-trash"></i></th>
+                                        <th scope="col" class="text-center"><button wire:click="removeAll"
+                                                class="btn btn-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -161,7 +174,8 @@
                                 </div>
                                 <div class="col">
                                     <label for="" class="form-label">Bayar</label>
-                                    <input type="number" class="form-control @error('totalBayar') is-invalid @enderror"
+                                    <input type="number"
+                                        class="form-control @error('totalBayar') is-invalid @enderror"
                                         wire:model.live='totalBayar'
                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57" @if (count($cartItems) == 0)
                                     disabled
@@ -173,7 +187,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <button class="btn btn-primary w-100 mt-3" wire:click="bayar">Bayar</button>
+                            <button class="btn btn-primary w-100 mt-3" wire:click="bayar"
+                                @if (count($cartItems) == 0) disabled @endif>Bayar</button>
                         </div>
                     </div>
                 </div>

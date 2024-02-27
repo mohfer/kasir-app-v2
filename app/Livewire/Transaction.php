@@ -3,9 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Item;
+use App\Models\Stock;
 use Livewire\Component;
 use App\Models\Membership;
-use App\Models\Stock;
+use Livewire\WithPagination;
 use App\Models\TransactionDetail;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,14 @@ use App\Models\Transaction as ModelsTransaction;
 
 class Transaction extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
     #[Validate('required|numeric|min:1')]
     public $qty;
 
     public $title = 'Transaction';
+    public $foto;
     public $searchKey;
     public $cartItems = [];
     public $cartItemsData = [];
@@ -29,6 +34,7 @@ class Transaction extends Component
     public $totalSetelahDiskon;
     public $kode_transaksi;
     public $stockEtalase;
+    public $countItems;
 
     public function mount()
     {
@@ -45,6 +51,8 @@ class Transaction extends Component
 
     public function addToCart($itemId)
     {
+        $item = Item::find($itemId);
+        $this->stockEtalase = $item->stock->stok_etalase ?? 0;
         if (!in_array($itemId, $this->cartItems)) {
             $this->cartItems[] = $itemId;
             $this->getCartItems();
@@ -79,7 +87,10 @@ class Transaction extends Component
         $this->updateKembalian();
     }
 
-
+    public function removeAll()
+    {
+        return $this->redirect('/transaction', navigate: true);
+    }
 
     public function removeFromCart($itemId)
     {
@@ -165,16 +176,6 @@ class Transaction extends Component
             }
         }
 
-
-        // $this->validate([
-        //     'totalBayar' => 'required|numeric|min:' . $this->totalSetelahDiskon,
-        //     'qty' => 'required|numeric|min:1|max:' . $this->stockEtalase
-        // ], [
-        //     'totalBayar.required' => 'Total bayar harus diisi.',
-        //     'totalBayar.min' => 'Total bayar harus lebih besar dari total harga.',
-        // ]);
-
-
         DB::transaction(function () {
             ModelsTransaction::create([
                 'kode_transaksi' => $this->kode_transaksi,
@@ -210,20 +211,26 @@ class Transaction extends Component
         return $this->redirect('/transaction', navigate: true);
     }
 
+    public function updatedSearchKey()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $items = Item::whereHas('stock', function ($query) {
+        $items = Item::where('nama_barang', 'like', '%' . $this->searchKey . '%')
+            ->whereHas('stock', function ($query) {
+                $query->where('stok_etalase', '>', 0);
+            })
+            ->paginate(4);
+
+        $this->countItems = Item::whereHas('stock', function ($query) {
             $query->where('stok_etalase', '>', 0);
-        });
-
-        if ($this->searchKey) {
-            $items->where('nama_barang', 'like', '%' . $this->searchKey . '%');
-        }
-
-        $items = $items->get();
+        })->count();
 
         $memberships = Membership::where('aktif', 'Ya')->get();
         view()->share('title', $this->title);
+
         return view('livewire.transaction', [
             'items' => $items,
             'cartItemsData' => $this->cartItemsData,

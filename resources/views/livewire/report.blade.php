@@ -4,34 +4,16 @@
 
             <div class="row gap-3 mt-3 justify-content-center">
                 <div class="col-md-3 border shadow bg-danger text-light rounded p-3">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Barang Terjual</h5>
-                        </div>
-                        <div class="col">
-                            <h1 class="text-center">{{ number_format($totalBarangTerjual) }}</h1>
-                        </div>
-                    </div>
+                    <h5>Barang Terjual</h5>
+                    <h1 class="text-center">{{ number_format($totalBarangTerjual) }}</h1>
                 </div>
                 <div class="col-md-3 border shadow bg-warning text-light rounded p-3">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Total Pendapatan</h5>
-                        </div>
-                        <div class="col">
-                            <h1 class="text-center">{{ number_format($totalPendapatan) }}</h1>
-                        </div>
-                    </div>
+                    <h5>Total Pendapatan</h5>
+                    <h1 class="text-center">Rp. {{ number_format($totalPendapatan) }}</h1>
                 </div>
                 <div class="col-md-3 border shadow bg-success text-light rounded p-3">
-                    <div class="row">
-                        <div class="col">
-                            <h5>Total Transaksi</h5>
-                        </div>
-                        <div class="col">
-                            <h1 class="text-center">{{ $totalTransaksi }}</h1>
-                        </div>
-                    </div>
+                    <h5>Total Transaksi</h5>
+                    <h1 class="text-center">{{ $totalTransaksi }}</h1>
                 </div>
             </div>
             <div class="row mt-3">
@@ -49,6 +31,7 @@
                 </div>
             </div>
 
+            {{-- Data --}}
             <div class="card mt-3">
                 <div class="card-header">
                     <div class="row">
@@ -78,6 +61,7 @@
                                         <th scope="col">Diskon</th>
                                         <th scope="col">Bayar</th>
                                         <th scope="col">Kembalian</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,12 +76,125 @@
                                             <td>{{ $transaction->diskon }}</td>
                                             <td>{{ number_format($transaction->bayar) }}</td>
                                             <td>{{ number_format($transaction->kembalian) }}</td>
+                                            <td class="text-center"><button class="btn btn-warning"
+                                                    data-bs-toggle="modal" data-bs-target="#modalUpdate"
+                                                    wire:click='edit({{ $transaction->id }})'>Detail</button>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     @endif
+                </div>
+            </div>
+
+            {{-- Detail Transaction --}}
+            <div wire:ignore.self class="modal fade" id="modalUpdate" data-bs-backdrop="static" tabindex="-1"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Transaction</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                wire:click='clear()'></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <table class=" w-100">
+                                    <tr>
+                                        <td>Waktu</td>
+                                        <td></td>
+                                        <td class="text-end">{{ $waktu }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kode Transaksi</td>
+                                        <td></td>
+                                        <td class="text-end">{{ $kode_transaksi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kasir</td>
+                                        <td></td>
+                                        <td class="text-end">{{ $kasir }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pt-3">Item</td>
+                                        <td class="pt-3">Qty</td>
+                                        <td class="pt-3 text-end">Subtotal</td>
+                                    </tr>
+                                    @if ($transactionDetails)
+                                        @foreach ($transactionDetails as $detail)
+                                            <tr>
+                                                <td>{{ $detail->item->nama_barang }}</td>
+                                                <td>{{ $detail->qty }}</td>
+                                                <td class="text-end">
+                                                    Rp.
+                                                    {{ number_format($detail->qty * $detail->item->harga_jual_akhir) }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="3">Tidak ada detail transaksi</td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <td class="pt-3">Subtotal</td>
+                                        <td class="pt-3"></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="pt-3 text-end">Rp.
+                                                {{ number_format($transactionDetails->first()->subtotal) }}
+                                            </td>
+                                        @endif
+                                    </tr>
+                                    <tr>
+                                        <td>Customer</td>
+                                        <td></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="text-end">{{ $customer }}
+                                        @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diskon</td>
+                                        <td></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="text-end">{{ $diskon }}%
+                                        @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="text-end">Rp. {{ number_format($total) }}
+                                            </td>
+                                        @endif
+                                    </tr>
+                                    <tr>
+                                        <td>Bayar</td>
+                                        <td></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="text-end">Rp. {{ number_format($bayar) }}
+                                            </td>
+                                        @endif
+                                    </tr>
+                                    <tr>
+                                        <td>Kembalian</td>
+                                        <td></td>
+                                        @if ($transactionDetails !== null && $transactionDetails->isNotEmpty())
+                                            <td class="text-end">Rp. {{ number_format($kembalian) }}
+                                            </td>
+                                        @endif
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    wire:click='clear()'>Close</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

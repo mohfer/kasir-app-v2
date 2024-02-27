@@ -19,6 +19,7 @@ class StokEtalase extends Component
     public $sortColumn = 'id';
     public $sortDirection = 'asc';
     public $countStocks;
+    public $errorMessage;
 
     public function mount()
     {
@@ -50,41 +51,46 @@ class StokEtalase extends Component
 
     public function save()
     {
-        $this->validate();
+        if ($this->selectedStockId == '') {
+            $this->errorMessage = 'Pilih Barang terlebih dahulu';
+            return;
+        } else {
+            $this->validate();
 
-        DB::transaction(function () {
-            $stockInWarehouse = Stock::find($this->selectedStockId);
-            if ($this->jumlah_item_etalase == 0) {
-                session()->flash('status', 'Tidak ada yang dipindahkan.');
+            DB::transaction(function () {
+                $stockInWarehouse = Stock::find($this->selectedStockId);
+                if ($this->jumlah_item_etalase == 0) {
+                    session()->flash('status', 'Tidak ada yang dipindahkan.');
+                    return $this->redirect('/stok-etalase', navigate: true);
+                }
+
+                if ($stockInWarehouse && $this->jumlah_item_etalase > $stockInWarehouse->stok_gudang) {
+                    $this->addError('jumlah_item_etalase', 'Jumlah item di etalase tidak boleh melebihi stok di gudang');
+                    return;
+                }
+
+                $stock = Stock::find($this->selectedStockId);
+                $newEtalaseStock = $stock->stok_etalase + $this->jumlah_item_etalase;
+                $stock->stok_gudang -= $this->jumlah_item_etalase;
+                $stock->stok_etalase = $newEtalaseStock;
+                $stock->save();
+
+                StokHistory::create([
+                    'no_faktur' => null,
+                    'item_id' => $this->selectedStockId,
+                    'supplier_id' => null,
+                    'jumlah' => $this->jumlah_item_etalase,
+                    'harga' => null,
+                    'bayar' => null,
+                    'kembali' => null,
+                    'keterangan' => 'Dipindahkan Ke Etalase',
+                    'tanggal' => now()->toDateString(),
+                ]);
+                session()->flash('status', 'Data Berhasil Ditambah!');
                 return $this->redirect('/stok-etalase', navigate: true);
-            }
-
-            if ($stockInWarehouse && $this->jumlah_item_etalase > $stockInWarehouse->stok_gudang) {
-                $this->addError('jumlah_item_etalase', 'Jumlah item di etalase tidak boleh melebihi stok di gudang');
-                return;
-            }
-
-            $stock = Stock::find($this->selectedStockId);
-            $newEtalaseStock = $stock->stok_etalase + $this->jumlah_item_etalase;
-            $stock->stok_gudang -= $this->jumlah_item_etalase;
-            $stock->stok_etalase = $newEtalaseStock;
-            $stock->save();
-
-            StokHistory::create([
-                'no_faktur' => null,
-                'item_id' => $this->selectedStockId,
-                'supplier_id' => null,
-                'jumlah' => $this->jumlah_item_etalase,
-                'harga' => null,
-                'bayar' => null,
-                'kembali' => null,
-                'keterangan' => 'Dipindahkan Ke Etalase',
-                'tanggal' => now()->toDateString(),
-            ]);
-            session()->flash('status', 'Data Berhasil Ditambah!');
-            return $this->redirect('/stok-etalase', navigate: true);
-            $this->clear();
-        });
+                $this->clear();
+            });
+        }
     }
 
 

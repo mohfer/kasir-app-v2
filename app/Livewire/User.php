@@ -7,6 +7,8 @@ use App\Models\Transaction;
 use Livewire\WithPagination;
 use Livewire\Attributes\Validate;
 use App\Models\User as ModelsUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Component
 {
@@ -107,6 +109,8 @@ class User extends Component
             session()->flash('error', 'Data tidak dapat dihapus karena masih dibutuhkan di halaman laporan.');
         } else {
             ModelsUser::find($id)->delete();
+            $user = ModelsUser::find(Auth::user()->id);
+            Storage::delete('photos/' . $user->foto);
             session()->flash('status', 'Data Berhasil Dihapus!');
         }
 

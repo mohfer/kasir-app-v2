@@ -239,6 +239,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Foto</label>
+                                    <input type="file" accept="image/*"
+                                        class="form-control @error('photo') is-invalid @enderror"
+                                        wire:model.change='photo'>
+                                    @error('photo')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                                 <div class="mt-3 text-end">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                         wire:click='clear()'>Close</button>
@@ -357,6 +368,20 @@
                                             @enderror
                                         </div>
                                     </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Foto</label> <br>
+                                    <img src="{{ $foto ? asset('storage/items/' . $foto) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png' }}"
+                                        class="card-img-top mb-3"
+                                        style="width: 200px; height: 200px; object-fit: cover;" alt="Profile Picture">
+                                    <input type="file" accept="image/*"
+                                        class="form-control @error('photo') is-invalid @enderror"
+                                        wire:model.change='photo'>
+                                    @error('photo')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mt-3 text-end">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

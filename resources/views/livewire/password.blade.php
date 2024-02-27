@@ -15,8 +15,9 @@
                             Photo
                         </div>
                         <div class="text-center pt-3">
-                            <img src="https://source.unsplash.com/random/500x500" class="card-img-top w-50 rounded-pill"
-                                alt="Profile Picture">
+                            <img src="{{ $foto ? asset('storage/photos/' . $foto) : 'https://cdn-icons-png.freepik.com/512/3135/3135715.png' }}"
+                                class="card-img-top rounded-circle"
+                                style="width: 200px; height: 200px; object-fit: cover;" alt="Profile Picture">
                         </div>
                         <div class="card-body text-center">
                             <h3 class="fw-bold">{{ $role }}</h3>
@@ -29,7 +30,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col text-start">
-                                    <h4 class="fw-bold">Data</h4>
+                                    <h4 class="fw-bold">Password</h4>
                                 </div>
                                 <div class="col text-end">
                                     <a class="btn btn-primary text-start" href="{{ url('profile') }}"

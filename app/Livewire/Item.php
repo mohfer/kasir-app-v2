@@ -5,11 +5,14 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Category;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use App\Models\Item as ModelsItem;
+use Illuminate\Support\Facades\Storage;
 
 class Item extends Component
 {
+    use WithFileUploads;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
@@ -22,6 +25,9 @@ class Item extends Component
     #[Validate('required|numeric|max:100|min:0')]
     public $diskon;
 
+    #[Validate('nullable|image|max:2048')]
+    public $photo;
+
     public $title = 'Items';
     public $item_id;
     public $harga_jual_akhir;
@@ -30,6 +36,9 @@ class Item extends Component
     public $countItems;
     public $searchKey;
     public $errorMessage;
+    public $fileName;
+    public $newFileName;
+    public $foto;
 
     public function mount()
     {
@@ -79,6 +88,13 @@ class Item extends Component
         } else {
             $this->validate();
 
+            $this->validate([
+                'photo' => 'nullable|image|max:2048',
+            ]);
+
+            $newFileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
+            $this->photo->storeAs('items', $newFileName);
+
             ModelsItem::create([
                 'kode_barang' => $this->kode_barang,
                 'nama_barang' => $this->nama_barang,
@@ -87,6 +103,7 @@ class Item extends Component
                 'harga_jual_awal' => $this->harga_jual_awal,
                 'diskon' => $this->diskon ?? 0,
                 'harga_jual_akhir' => $this->harga_jual_akhir,
+                'foto' => $newFileName,
             ]);
 
             session()->flash('status', 'Data Berhasil Ditambah!');
@@ -110,13 +127,29 @@ class Item extends Component
         $this->harga_jual_awal = $item->harga_jual_awal;
         $this->diskon = $item->diskon;
         $this->harga_jual_akhir = $item->harga_jual_akhir;
+        $this->foto = $item->foto;
 
         $this->item_id = $id;
     }
 
     public function update()
     {
+        $this->validate([
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
         $item = ModelsItem::find($this->item_id);
+
+        $newFileName = null;
+
+        if ($this->photo) {
+            $newFileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
+            $this->photo->storeAs('items', $newFileName);
+
+            if ($item->foto) {
+                Storage::delete('items/' . $item->foto);
+            }
+        }
 
         $newData = [
             'nama_barang' => $this->nama_barang,
@@ -127,12 +160,20 @@ class Item extends Component
             'harga_jual_akhir' => $this->harga_jual_akhir,
         ];
 
+        if ($newFileName) {
+            $newData['foto'] = $newFileName;
+        }
+
         $isChanged = $item->nama_barang != $newData['nama_barang'] ||
             $item->category_id != $newData['category_id'] ||
             $item->harga_beli != $newData['harga_beli'] ||
             $item->harga_jual_awal != $newData['harga_jual_awal'] ||
             $item->diskon != $newData['diskon'] ||
             $item->harga_jual_akhir != $newData['harga_jual_akhir'];
+
+        if (isset($newData['foto'])) {
+            $isChanged = $isChanged || $item->foto != $newData['foto'];
+        }
 
         if (!$isChanged) {
             session()->flash('status', 'Tidak ada perubahan yang dilakukan.');

@@ -15,6 +15,7 @@ class Password extends Component
     public $title = 'Password';
     public $role;
     public $nama;
+    public $foto;
     public $showPassword = false;
 
     public function mount()
@@ -22,6 +23,7 @@ class Password extends Component
         $user = Auth::user();
         $this->role = $user->role;
         $this->nama = $user->nama;
+        $this->foto = $user->foto;
     }
 
     public function togglePasswordVisibility()

@@ -1,13 +1,13 @@
 <div>
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/dashboard">Kasir App</a>
+            <a class="navbar-brand fw-bold" href="{{ url('dashboard') }}" wire:navigate>Kasir App</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto gap-1">
                     {{-- Dashboard --}}
                     <a class="btn btn-primary text-start {{ Route::is('dashboard') ? 'active' : '' }}"
                         href="{{ url('dashboard') }}" wire:navigate>Dashboard</a>

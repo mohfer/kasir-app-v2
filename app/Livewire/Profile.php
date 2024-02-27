@@ -22,7 +22,7 @@ class Profile extends Component
     #[Validate('required|unique:users|max:16')]
     public $telp;
 
-    #[Validate('image|max:2048')]
+    #[Validate('nullable|image|max:2048')]
     public $photo;
 
     public $title = 'Profile';
@@ -31,6 +31,7 @@ class Profile extends Component
     public $fileName;
     public $newFileName;
     public $username;
+    public $foto;
 
     public function mount()
     {
@@ -41,32 +42,45 @@ class Profile extends Component
         $this->jenis_kelamin = $user->jenis_kelamin;
         $this->email = $user->email;
         $this->telp = $user->telp;
+        $this->foto = $user->foto;
     }
 
     public function save()
     {
+        $this->validate([
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
         $user = User::find(Auth::user()->id);
+
+        $newFileName = null;
+
         if ($this->photo) {
-            $this->fileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
-            $this->photo->storeAs('photos', $this->fileName);
+            $newFileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
+            $this->photo->storeAs('photos', $newFileName);
 
             if ($user->foto) {
                 Storage::delete('photos/' . $user->foto);
             }
-            $user->foto = $this->newFileName;
         }
 
         $newData = [
             'jenis_kelamin' => $this->jenis_kelamin,
             'email' => $this->email,
             'telp' => $this->telp,
-            'foto' => $this->fileName,
         ];
+
+        if ($newFileName) {
+            $newData['foto'] = $newFileName;
+        }
 
         $isChanged = $user->jenis_kelamin != $newData['jenis_kelamin'] ||
             $user->email != $newData['email'] ||
-            $user->telp != $newData['telp'] ||
-            $user->foto != $newData['foto'];
+            $user->telp != $newData['telp'];
+
+        if (isset($newData['foto'])) {
+            $isChanged = $isChanged || $user->foto != $newData['foto'];
+        }
 
         if (!$isChanged) {
             session()->flash('status', 'Tidak ada perubahan yang dilakukan.');
@@ -74,6 +88,8 @@ class Profile extends Component
             $user->update($newData);
             session()->flash('status', 'Data Berhasil Diperbarui!');
         }
+
+        return $this->redirect('/profile', navigate: true);
     }
 
     public function render()
