@@ -15,7 +15,7 @@
                             Photo
                         </div>
                         <div class="text-center pt-3">
-                            <img src="{{ $foto ? asset('storage/photos/' . $foto) : 'https://cdn-icons-png.freepik.com/512/3135/3135715.png' }}"
+                            <img src="{{ $foto ? asset('storage/photos/' . $foto) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png' }}"
                                 class="card-img-top rounded-circle"
                                 style="width: 200px; height: 200px; object-fit: cover;" alt="Profile Picture">
                         </div>
