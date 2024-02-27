@@ -18,6 +18,12 @@ Aplikasi kasir ini dirancang untuk membantu pemilik bisnis kecil mengelola trans
 -   Lihat riwayat transaksi untuk melacak aktivitas penjualan.
 -   Dll.
 
+## Role
+
+-   Admin
+-   Gudang
+-   Kasir
+
 ## Diperlukan
 
 -   Composer
