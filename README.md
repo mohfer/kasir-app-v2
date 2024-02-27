@@ -21,9 +21,7 @@ Aplikasi kasir ini dirancang untuk membantu pemilik bisnis kecil mengelola trans
 ## Diperlukan
 
 -   Composer
-
 -   PHP version of 8.1.
-
 -   MySql
 
 ## Instalasi
@@ -81,3 +79,8 @@ Jalankan
 ```bash
 php artisan ser
 ```
+
+## Login
+
+-   Username: admin
+-   Password: password
