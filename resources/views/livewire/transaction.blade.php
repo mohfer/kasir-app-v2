@@ -40,7 +40,7 @@
                                                     </div>
                                                 @endif
                                                 <img src="{{ $item->foto ? asset('storage/items/' . $item->foto) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png' }}"
-                                                    class="card-img-top"
+                                                    class="card-img-top w-100"
                                                     style="width: 200px; height: 200px; object-fit: cover;"
                                                     alt="Profile Picture">
                                                 <div class="card-body text-center">

@@ -169,8 +169,16 @@ class Transaction extends Component
             return;
         }
 
+        if ($this->totalSetelahDiskon < 0) {
+            session()->flash('error', 'Total Harga Tidak Boleh Minus.');
+            return;
+        }
+
         foreach ($this->qty as $qtyItem) {
-            if ($qtyItem > $this->stockEtalase) {
+            if ($qtyItem <= 0) {
+                session()->flash('error', 'Qty Tidak Boleh Kosong.');
+                return;
+            } else if ($qtyItem > $this->stockEtalase) {
                 session()->flash('error', 'Ada barang yang melebihi stok etalase.');
                 return;
             }
