@@ -77,7 +77,7 @@ class Kategori extends Component
         Item::where('category_id', $categoryId)->update(['category_id' => null]);
         Category::find($categoryId)->delete();
         session()->flash('status', 'Data Berhasil Dihapus!');
-        return redirect('/kategori');
+        return $this->redirect('/kategori', navigate: true);
     }
 
 

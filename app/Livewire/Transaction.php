@@ -202,7 +202,7 @@ class Transaction extends Component
                 if ($stok) {
                     $stok->update(['stok_etalase' => $stok->stok_etalase - $this->qty[$item['id']]]);
                 } else {
-                    session()->flash('success', 'Transaksi Gagal!');
+                    session()->flash('error', 'Transaksi Gagal!');
                     return $this->redirect('/transaction', navigate: true);
                 }
                 TransactionDetail::create([

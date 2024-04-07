@@ -90,6 +90,9 @@ class Item extends Component
 
             $this->validate([
                 'photo' => 'nullable|image|max:2048',
+                'harga_beli' => 'numeric|min:1',
+                'harga_jual_awal' => 'numeric|min:1',
+                'diskon' => 'numeric|min:0|max:100',
             ]);
 
             $newFileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
@@ -134,9 +137,6 @@ class Item extends Component
 
     public function update()
     {
-        $this->validate([
-            'photo' => 'nullable|image|max:2048',
-        ]);
 
         $item = ModelsItem::find($this->item_id);
 
@@ -183,9 +183,9 @@ class Item extends Component
         $this->validate([
             'nama_barang' => 'required|unique:items,nama_barang,' . $this->item_id,
             'selectedCategory' => 'required|numeric',
-            'harga_beli' => 'required|numeric',
-            'harga_jual_awal' => 'required|numeric',
-            'diskon' => 'required|numeric|max:100',
+            'harga_beli' => 'required|numeric|min:1',
+            'harga_jual_awal' => 'required|numeric|min:1',
+            'diskon' => 'required|numeric|min:0|max:100',
         ]);
 
         $item->update($newData);
