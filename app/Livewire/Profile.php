@@ -57,7 +57,7 @@ class Profile extends Component
 
         if ($this->photo) {
             $newFileName = md5($this->photo . microtime()) . '.' . $this->photo->extension();
-            $this->photo->storeAs('photos', $newFileName);
+            $this->photo->storePubliclyAs(path: 'photos', name: $newFileName);
 
             if ($user->foto) {
                 Storage::delete('photos/' . $user->foto);
