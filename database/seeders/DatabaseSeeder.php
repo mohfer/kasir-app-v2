@@ -21,46 +21,28 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        DB::table('users')->insert([
-            'nama' => 'Admin',
-            'username' => 'ADMIN',
-            'password' => bcrypt('password'),
-            'jenis_kelamin' => 'L',
-            'email' => 'admin@gmail.com',
-            'telp' => '083812334555',
-            'role' => 'Admin',
-            'foto' => '',
-        ]);
+        DB::table('users')->updateOrInsert(
+            ['username' => 'ADMIN'],
+            [
+                'nama' => 'Admin',
+                'username' => 'ADMIN',
+                'password' => bcrypt('password'),
+                'jenis_kelamin' => 'L',
+                'email' => 'admin@gmail.com',
+                'telp' => '083812334555',
+                'role' => 'Admin',
+                'foto' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
 
-        DB::table('categories')->insert([
-            'nama_kategori' => 'Makanan',
-        ]);
-
-        DB::table('items')->insert([
-            'kode_barang' => 1165161182858,
-            'nama_barang' => 'Chitato',
-            'category_id' => 1,
-            'harga_beli' => 2000,
-            'harga_jual_awal' => 4000,
-            'diskon' => 0,
-            'harga_jual_akhir' => 4000,
-        ]);
-
-        DB::table('suppliers')->insert([
-            'nama' => 'PT. Indah Jaya',
-            'email' => 'indahjaya@indah.com',
-            'alamat' => 'Bojongsari',
-            'telp' => 112233,
-        ]);
-
-        DB::table('memberships')->insert([
-            'kode_member' => 'FOR844',
-            'nama' => 'Umum',
-            'email' => 'umum@umum.com',
-            'telp' => 112233,
-            'diskon' => 0,
-            'tgl_berlangganan' => '2024-02-23',
-            'aktif' => 'Ya',
+        // Call individual seeders
+        $this->call([
+            CategorySeeder::class,
+            SupplierSeeder::class,
+            MembershipSeeder::class,
+            ItemSeeder::class,
         ]);
 
         // User::factory(50)->create();
